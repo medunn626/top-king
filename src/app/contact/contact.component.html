@@ -1,23 +1,21 @@
 <div id="wrapper">
-    <form target="_blank" action="https://formsubmit.co/medunn626@yahoo.com" method="POST" ngNativeValidate>
+    <form (ngSubmit)="sendEmail(data)" ngnativevalidate>
         <h1>Ask The King</h1>
-        <input type="hidden" name="_subject" value="New Client Email!"/>
         <label for="name">Name</label>
         <br/>
-        <input type="text" name="name" placeholder="e.g. 'Martin" size="40" required/>
+        <input [(ngModel)]="data.name" type="text" name="name" placeholder="e.g. 'Martin" size="40" required/>
         <br/>
         <br/>
         <label for="email">Email</label>
         <br/>
-        <input type="email" name="email" placeholder="e.g. 'name@gmail.com'" size="40" required/>
+        <input [(ngModel)]="data.email" type="email" name="email" placeholder="e.g. 'name@gmail.com'" size="40" required/>
         <br/>
         <br/>
         <label for="message">What can I answer for you?</label>
         <br/>
-        <textarea name="message" cols="40" rows="10" placeholder="Insert message here" required></textarea> 
+        <textarea [(ngModel)]="data.message" name="message" cols="40" rows="10" placeholder="Insert message here" required></textarea> 
         <p class="submit button">
             <input type="submit" value="Submit"/>
         </p>
     </form>
 </div>
-
