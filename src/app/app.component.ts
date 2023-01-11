@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'top-king';
+
+  constructor(
+    public auth: AuthService,
+  ) { }
+
+  signOut() {
+    this.auth.signOut()
+  }
+
+  ngOnInit() {
+    this.auth.setStatus()
+  }
 }

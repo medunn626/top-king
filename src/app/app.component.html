@@ -1,2 +1,47 @@
-Testing 123
-<router-outlet></router-outlet>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div class="navbar-brand">
+        <span class="logo">      
+          <img src="../assets/tko-logo.jpg" width="50" height="50"/>
+        </span>
+        Top King Training
+      </div>
+      <button *ngIf="auth.loggedIn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Menu Options</span>
+        <span class="icon-bar">&nbsp;</span>
+        <span class="icon-bar">&nbsp;</span>
+        <span class="icon-bar">&nbsp;</span>
+      </button>
+    </div>
+    <div *ngIf="auth.loggedIn" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav pull-left">
+        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/home">Home</a></li>
+        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/budget">My Budget</a></li>
+        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/expenses">My Expenses</a></li>
+        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/auth/change-password">Change Password</a></li>
+        <li><a><input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div *ngIf="auth.signOutFailure" class="failure">
+  <h5>There was an error signing out.</h5>
+</div>
+<main>
+  <router-outlet></router-outlet>
+</main>
+<div class="footer">
+  <div class="social">
+    <a href="https://www.facebook.com/people/musclevilleking/100072016121133" target="_blank">
+      <img src="../assets/fb.png" width="50" height="50"/>
+    </a>
+    <a href="https://www.instagram.com/musclevilleking/" target="_blank">
+      <img src="../assets/ig.png" width="50" height="50"/>
+    </a>
+    <a href="https://www.youtube.com/@musclevilleking897" target="_blank">
+      <img src="../assets/yt.png" width="50" height="50"/>
+    </a>
+  </div>
+  <p>&copy; 2023 Top King Custom Exercise Programs - All Rights Reserved</p>
+</div>

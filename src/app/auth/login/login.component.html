@@ -1,0 +1,50 @@
+<div style="text-align:center">
+  <h3>Welcome to your budgeting app Amaounda! Why don't you register or sign in so you can get to saving?</h3>
+</div>
+<div id="container">
+  <a class="hiddenanchor" id="toregister"></a>
+  <a class="hiddenanchor" id="tologin"></a>
+  <!-- Login/Sign up Box -->
+  <div id="wrapper">
+    <!-- Login Form -->
+    <div id="login" class="animate">
+      <form ngNativeValidate>
+        <div *ngIf="auth.loginFailure" class="failure">
+          <h5>Please try again. This username doesn't exist or you have entered the fields incorrectly.</h5>
+        </div>
+        <h1>Log In!</h1>
+        <label for="email">Username:</label><br>
+        <input [(ngModel)]="user.email" id="email-log" name="email" type="text" placeholder="Username" required/><br>
+        <label for="password">Password:</label><br>
+        <input [(ngModel)]="user.password" id="password-log" name="password" type="password" placeholder="Password" required/><br>
+        <p class="login button">
+          <input (click)="login()" type="submit" value="Log in"/>
+        </p>
+        <div class="lower">
+          <a href="#toregister">Not a member yet? Register!</a>
+        </div><!--/ lower-->
+      </form>
+    </div><!--/ login-->
+    <!-- Sign Up Form  -->
+    <div id="register" class="animate">
+      <form ngNativeValidate>
+        <div *ngIf="auth.signUpFailure" class="failure">
+          <h5>Please try again. This username already exists or you have entered the fields incorrectly.</h5>
+        </div>
+        <h1>Sign Up!</h1>
+        <label for="email">Username:</label><br>
+        <input [(ngModel)]="newUser.email" id="email-sign" type="text" name="email" placeholder="Username" required/><br>
+        <label for="password">Password:</label><br>
+        <input [(ngModel)]="newUser.password" id="password-sign" type="password" name="password" placeholder="Password" required/><br>
+        <label for="confirm_password">Confirm Password:</label><br>
+        <input [(ngModel)]="newUser.password_confirmation" id="password-confirm-sign" name="confirm_password" type="password" name="password_confirmation" placeholder="Confirm Passsword" required/><br>
+        <p class="signup button">
+          <input (click)="signUp()" type="submit" value="Sign Up"/>
+        </p>
+        <div class="lower">
+          <a href="#tologin">Already a member? Sign In!</a>
+        </div><!--/ lower-->
+      </form>
+    </div><!--/ register-->
+  </div><!--/ wrapper-->
+</div><!--/ container-->
