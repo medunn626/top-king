@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { of } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -14,7 +14,6 @@ export class AuthService {
   isAdmin = false;
 
   constructor(
-    private http: Http,
     public router: Router
   ) { }
 
@@ -36,7 +35,8 @@ export class AuthService {
         'password': password
       }
     }
-    this.http.post(environment.apiServer + '/sign-in', data)
+    // this.http.post(environment.apiServer + '/sign-in', data)
+    of({})
     .subscribe(
       response => {
         const user = JSON.parse(response['_body']).user
@@ -69,7 +69,8 @@ export class AuthService {
           'password_confirmation': password_confirmation
         }
       }
-      this.http.post(environment.apiServer + '/sign-up', data)
+      // this.http.post(environment.apiServer + '/sign-up', data)
+      of({})
       .subscribe(
         response => {
           this.login(data.credentials.email, data.credentials.password)
@@ -94,7 +95,8 @@ export class AuthService {
   signOut() {
     let config = {}
     config['headers'] = { Authorization:'Token token=' + localStorage.getItem('token')}
-    this.http.delete(environment.apiServer + '/sign-out/' + localStorage.getItem('id'), config)
+    // this.http.delete(environment.apiServer + '/sign-out/' + localStorage.getItem('id'), config)
+    of({})
     .subscribe(
       data => {
         localStorage.clear()
@@ -120,7 +122,8 @@ export class AuthService {
       }
       let config = {}
       config['headers'] = { Authorization:'Token token=' + localStorage.getItem('token')}
-      this.http.patch(environment.apiServer + '/change-password/' + localStorage.getItem('id'), data, config)
+      // this.http.patch(environment.apiServer + '/change-password/' + localStorage.getItem('id'), data, config)
+      of({})
       .subscribe(
         response => {
           this.changePasswordSuccess = true

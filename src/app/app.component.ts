@@ -8,10 +8,13 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = 'top-king';
+  date = '';
 
   constructor(
     public auth: AuthService,
-  ) { }
+  ) {
+    this.date = '' + new Date().getFullYear();
+   }
 
   signOut() {
     this.auth.signOut()
