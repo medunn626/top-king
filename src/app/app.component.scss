@@ -3,11 +3,33 @@
     color: goldenrod;
 }
 
-.container-fluid, .social {
+.navbar-toggle {
+    border-color: transparent;
+}
+
+.container-fluid, .social  {
     display: flex;
     justify-content: center;
 }
 
+.navbar-area {
+    right: 0;
+    position: absolute;
+}
+
 .logo {
     margin-right: 5px;
+}
+
+.admin {
+    color: red;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+@media(min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: flex !important;
+        justify-content: center;
+    }
 }

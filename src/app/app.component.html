@@ -7,26 +7,31 @@
         </span>
         Top King Training
       </div>
-      <button *ngIf="auth.loggedIn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Menu Options</span>
+    </div>
+    <div class="navbar-area">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="icon-bar">&nbsp;</span>
         <span class="icon-bar">&nbsp;</span>
         <span class="icon-bar">&nbsp;</span>
       </button>
     </div>
-    <div *ngIf="auth.loggedIn" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav pull-left">
-        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/home">Home</a></li>
-        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/budget">My Budget</a></li>
-        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/expenses">My Expenses</a></li>
-        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/auth/change-password">Change Password</a></li>
-        <li><a><input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/></a></li>
-      </ul>
-    </div>
+  </div>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/home">Home</a></li>
+      <li *ngIf="auth.loggedIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/content">View Training Content</a></li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/packages">Packages</a></li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/contact">Contact Top King</a></li>
+      <li *ngIf="!auth.loggedIn"><a><input class="btn-warning" (click)="login()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log In"/></a></li>
+      <li *ngIf="auth.loggedIn"><a><input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/></a></li>
+    </ul>
   </div>
 </nav>
 <div *ngIf="auth.signOutFailure" class="failure">
   <h5>There was an error signing out.</h5>
+</div>
+<div *ngIf="auth.isAdmin" class="admin">
+  <marquee direction="right" behavior="alternate">YOU ARE IN ADMIN VIEW!</marquee>
 </div>
 <main>
   <router-outlet></router-outlet>
@@ -43,5 +48,5 @@
       <img src="../assets/yt.png" width="50" height="50"/>
     </a>
   </div>
-  <p>&copy; 2023 Top King Custom Exercise Programs - All Rights Reserved</p>
+  <p style="text-align: center">&copy; 2023 Top King Custom Exercise Programs - All Rights Reserved</p>
 </div>

@@ -11,6 +11,7 @@ export class AuthService {
   signOutFailure = false;
   changePasswordSuccess = false;
   changePasswordFailure = false;
+  isAdmin = false;
 
   constructor(
     private http: Http,

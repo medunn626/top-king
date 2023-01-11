@@ -4,6 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth/auth.service';
+import { ContactModule } from './contact/contact.module';
+import { ContentModule } from './content/content.module';
+import { HomeModule } from './home/home.module';
+import { PackagesModule } from './packages/packages.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +16,11 @@ import { AuthService } from './auth/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    ContactModule,
+    PackagesModule,
+    ContentModule,
+    HomeModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
