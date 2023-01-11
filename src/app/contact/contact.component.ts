@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactCompnent implements OnInit {
+export class ContactCompnent {
 
-  constructor() { }
-
-  ngOnInit() {
+  sendEmail() {
+    console.log('working?')
+    
   }
-
 }
