@@ -1,1 +1,30 @@
-Your Training Content!!
+<div>
+    <div id="wrapper">
+        <h1>Training Content</h1>
+    </div>
+    <div *ngFor="let video of userAccessVideos" id="wrapper">
+        <div>
+            <h4>{{ video.title }}</h4>
+            <video width="320" height="240" controls>
+                <source [src]="video.source" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div *ngIf="latestUserHiddenVideo">
+        <div id="wrapper">
+            <a routerLink="/plans">Upgrade plan to see more videos</a>
+        </div>
+        <div id="wrapper">
+            <div>
+                <h4>{{ latestUserHiddenVideo.title }}</h4>
+                <video width="320" height="240" controls>
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
