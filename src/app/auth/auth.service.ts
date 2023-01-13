@@ -26,6 +26,12 @@ export class AuthService {
     }
   }
 
+  mockLogin() {
+    localStorage.setItem('token', 'mock');
+    this.setStatus();
+    this.router.navigate(['/home/']);
+  }
+
   login(email: string, password: string) {
     const emailField = <HTMLInputElement>document.getElementById('email-log')
     const passwordField = <HTMLInputElement>document.getElementById('password-log')

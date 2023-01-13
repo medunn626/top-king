@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   user = <any>{};
-  newUser = <any>{};
+  isNewUser = false;
 
   constructor(
     public auth: AuthService,
@@ -24,10 +23,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.auth.login(this.user.email, this.user.password)
+    // if (this.isNewUser) {
+    //   this.auth.signUp(this.user.email, this.user.password, this.user.password_confirmation)
+    // } else {
+    //   this.auth.login(this.user.email, this.user.password)
+    // }
+    this.auth.mockLogin();
   }
 
-  signUp() {
-    this.auth.signUp(this.newUser.email, this.newUser.password, this.newUser.password_confirmation)
+  toggleIsNewUser() {
+    this.isNewUser = !this.isNewUser;
   }
 }

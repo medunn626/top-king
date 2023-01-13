@@ -17,24 +17,9 @@ h3 {
   color: red;
 }
 
-#register,
-#login {
-  position: absolute;
-	width: 95%;
-  max-width: 800px;
-  left: 2%;
-	padding: 18px 6% 60px 6%;
-	margin: 0 0 35px 0;
-	background: rgb(247, 247, 247);
-	border: 1px solid rgba(147, 184, 189,0.8);
-	box-shadow:
-		0pt 2px 5px rgba(105, 108, 109,  0.7),
-		0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
-	border-radius: 5px;
-}
-
-#login {
-  z-index: 22;
+#wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 /**** general text styling ****/
@@ -109,7 +94,7 @@ input {
 #wrapper p.button input{
 	width: 30%;
 	cursor: pointer;
-	background: rgb(61, 157, 179);
+	background: goldenrod;
 	padding: 8px 5px;
 	font-family: 'BebasNeueRegular','Arial Narrow',Arial,sans-serif;
 	color: #fff;
@@ -125,24 +110,22 @@ input {
 	transition: all 0.2s linear;
 }
 #wrapper p.button input:hover{
-	background: rgb(74, 179, 198);
+	background: goldenrod;
 }
 #wrapper p.button input:active,
 #wrapper p.button input:focus{
-	background: rgb(40, 137, 154);
+	background: goldenrod;
 	position: relative;
 	top: 1px;
 	border: 1px solid rgb(12, 76, 87);
 	box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
 }
-p.login.button,
-p.signup.button{
+p.login.button {
 	text-align: right;
 	margin: 5px 0;
 }
 
 .lower {
-	position: absolute;
 	color: rgb(127, 124, 124);
 	left: 0px;
 	height: auto;
@@ -167,7 +150,7 @@ p.signup.button{
 	font-weight: bold;
 	background: rgb(247, 248, 241);
 	padding: 2px 6px;
-	color: rgb(29, 162, 193);
+	color: goldenrod;
 	margin-left: 10px;
 	text-decoration: none;
 	border-radius: 4px;
@@ -176,58 +159,12 @@ p.signup.button{
 }
 
 #wrapper a:hover {
-	color: rgb(57, 191, 215);
+	color: goldenrod;
 	background: rgb(247, 247, 247);
-	border: 1px solid rgb(74, 179, 198);
+	border: 1px solid rgb(203, 213, 214);
 }
 
 #wrapper a:active{
 	position: relative;
 	top: 1px;
-}
-
-#register{
-	z-index: 21;
-	opacity: 0;
-}
-
-#toregister:target ~ #wrapper #register,
-#tologin:target ~ #wrapper #login{
-	z-index: 22;
-	animation-name: fadeInLeft;
-	animation-delay: .1s;
-}
-
-.animate {
-	animation-duration: 0.5s;
-	animation-timing-function: ease;
-	animation-fill-mode: both;
-}
-@keyframes fadeInLeft {
-	0% {
-		opacity: 0;
-		transform: translateX(-20px);
-	}
-
-	100% {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-#toregister:target ~ #wrapper #login,
-#tologin:target ~ #wrapper #register{
-	animation-name: fadeOutLeftBig;
-}
-
-@keyframes fadeOutLeft {
-	0% {
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	100% {
-		opacity: 0;
-		transform: translateX(-20px);
-	}
 }

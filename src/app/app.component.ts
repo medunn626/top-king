@@ -20,9 +20,6 @@ export class AppComponent {
     this.auth.signOut()
   }
 
-  login() {
-    //
-  }
 
   ngOnInit() {
     this.auth.setStatus()

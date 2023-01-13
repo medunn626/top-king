@@ -44,7 +44,7 @@ export class ContactCompnent {
     const nextInput = document.createElement("input");
     nextInput.type = "hidden";
     nextInput.name = "_next";
-    nextInput.value = "https://medunn626.github.io/top-king/contact"
+    nextInput.value = "https://medunn626.github.io/top-king/"
     mapForm.appendChild(nextInput);
 
     document.body.appendChild(mapForm);

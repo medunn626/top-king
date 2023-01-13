@@ -12,16 +12,12 @@ const authRoutes: Routes = [
       {
         path: 'change-password',
         component: ChangePasswordComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
       }
     ]
-  },
-  // {
-  //   path: 'home',
-  //   component: HomeComponent
-  // },
-  {
-    path: '',
-    component: LoginComponent
   }
 ]
 
