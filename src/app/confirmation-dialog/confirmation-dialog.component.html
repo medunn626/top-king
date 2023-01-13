@@ -1,0 +1,11 @@
+<div class="dialog" cdkFocusRegionStart>
+    <div class="content">
+        <div mat-dialog-content>
+            <h4>{{confirmMessage}}</h4>
+        </div>
+        <div class="dialog-buttons" mat-dialog-actions>
+            <button class="cancel-button action-button" mat-button (click)="setHasConfirmed(false)">Cancel</button>
+            <button class="action-button" mat-button (click)="setHasConfirmed(true)">Confirm</button>
+        </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   user = <any>{};
   isNewUser = false;
+  showLoginFirstMessage = false;
 
   constructor(
     public auth: AuthService,
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.router.navigate(['home'])
     }
+    this.showLoginFirstMessage = !!localStorage.getItem('intentToPurchasePlan');
   }
 
   login() {
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit {
     // } else {
     //   this.auth.login(this.user.email, this.user.password)
     // }
-    this.auth.mockLogin();
+    const planToPurchase = localStorage.getItem('intentToPurchasePlan');
+    this.auth.mockLogin(planToPurchase);
   }
 
   toggleIsNewUser() {

@@ -1,1 +1,39 @@
-Package Offerings!!
+<div>
+    <div id="wrapper">
+        <h1>Plans</h1>
+    </div>
+    <div *ngIf="usersPackages.length" id="wrapper">
+        <h4>Your Current Plan</h4>
+    </div>
+    <div *ngFor="let package of usersPackages" id="wrapper">
+        <div>
+            <h3>{{ package.title }}</h3>
+            <ul *ngFor="let desc of package.descriptions">
+                <li>{{ desc }}</li>
+            </ul>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div *ngIf="usersPackages.length" id="wrapper">
+        <h4>Other Plans</h4>
+    </div>
+    <div *ngFor="let package of usersNonPackages" id="wrapper">
+        <div>
+            <h3>{{ package.title }}</h3>
+            <ul *ngFor="let desc of package.descriptions">
+                <li>{{ desc }}</li>
+            </ul>
+            <p class="purchase button">
+                <input 
+                class="purchase-button"
+                (click)="purchasePlan(package.id)"
+                type="submit"
+                [value]="usersCurrentPlan === 0 ? 'Purchase This Plan' : 'Switch To This Plan'"/>
+            </p>
+            <br/>
+        </div>
+    </div>
+ </div>
+ <br/>
+ <br/>

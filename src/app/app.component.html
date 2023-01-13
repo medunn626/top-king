@@ -20,7 +20,7 @@
     <ul class="nav navbar-nav">
       <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/home">Home</a></li>
       <li *ngIf="auth.loggedIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/content">View Training Content</a></li>
-      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/packages">Packages</a></li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/plans">Plans</a></li>
       <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/contact">Contact Top King</a></li>
       <li *ngIf="!auth.loggedIn"><a><input class="btn-warning" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log In" routerLink="/login"/></a></li>
       <li *ngIf="auth.loggedIn"><a><input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/></a></li>

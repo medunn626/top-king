@@ -26,10 +26,15 @@ export class AuthService {
     }
   }
 
-  mockLogin() {
+  mockLogin(planToPurchase) {
     localStorage.setItem('token', 'mock');
     this.setStatus();
-    this.router.navigate(['/home/']);
+    if (planToPurchase) {
+      localStorage.setItem('plan', planToPurchase);
+      this.router.navigate(['/plans/']);
+    } else {
+      this.router.navigate(['/home/']);
+    }
   }
 
   login(email: string, password: string) {
