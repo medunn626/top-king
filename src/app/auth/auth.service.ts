@@ -33,7 +33,7 @@ export class AuthService {
       localStorage.setItem('plan', planToPurchase);
       this.router.navigate(['/plans/']);
     } else {
-      this.router.navigate(['/home/']);
+      this.router.navigate(['/content/']);
     }
   }
 

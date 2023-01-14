@@ -35,22 +35,22 @@ export class ContentComponent implements OnInit {
     this.videos = [
       {
         title: 'Compeition',
-        source: '../../assets/competition.mp4',
+        source: '/assets/competition.mp4',
         plansApplies: [1, 2, 3]
       },
       {
         title: 'Grocery Shopping',
-        source: '../../assets/grocery.mp4',
+        source: '/assets/grocery.mp4',
         plansApplies: [2, 3]
       },
       {
         title: 'Cheat Meal',
-        source: '../../assets/grocery.mp4',
+        source: '/assets/grocery.mp4',
         plansApplies: [3]
       },
       {
         title: 'Powerball',
-        source: '../../assets/powerball.mp4',
+        source: '/assets/powerball.mp4',
         plansApplies: [3]
       }
     ]
