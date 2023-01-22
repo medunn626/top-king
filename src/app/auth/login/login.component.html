@@ -20,12 +20,12 @@
       <label for="confirm_password">Confirm Password</label><br>
       <input [(ngModel)]="user.password_confirmation" id="password-confirm-sign" name="confirm_password" type="password" name="password_confirmation" placeholder="Confirm Passsword" required/><br>
     </div>
-    <p class="login button">
-      <input (click)="login()" class="login-input" type="submit" value="Log in"/>
-    </p>
     <div class="lower">
       <a (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
     </div><!--/ lower-->
+    <p class="login button">
+      <input (click)="login()" class="login-input" type="submit" value="Log in"/>
+    </p>
   </form>
 </div><!--/ wrapper-->
 <br/>

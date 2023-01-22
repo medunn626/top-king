@@ -131,6 +131,7 @@ p.login.button {
 	height: auto;
 	width: 100%;
 	padding: 17px 30px 20px 30px;
+	margin-top: 12px;
 	font-size: 16px	;
 	text-align: right;
 	border-top: 1px solid rgb(219, 229, 232);
