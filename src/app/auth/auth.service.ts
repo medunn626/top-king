@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+export interface UserResponse {
+  id: string;
+  productTier: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -11,156 +16,89 @@ export class AuthService {
   signOutFailure = false;
   changePasswordSuccess = false;
   changePasswordFailure = false;
-  isAdmin = false;
 
   constructor(
-    public router: Router
+    public router: Router,
+    private http: HttpClient
   ) { }
 
-  setStatus() {
-    const token = localStorage.getItem('token')
-    if (token == null) {
-      this.loggedIn = false
-    } else {
-      this.loggedIn = true
-    }
-  }
-
-  mockLogin(planToPurchase) {
-    localStorage.setItem('token', 'mock');
-    this.setStatus();
-    if (planToPurchase) {
-      localStorage.setItem('plan', planToPurchase);
-      this.router.navigate(['/plans/']);
-    } else {
-      this.router.navigate(['/content/']);
-    }
-  }
-
-  login(email: string, password: string) {
-    const emailField = <HTMLInputElement>document.getElementById('email-log')
-    const passwordField = <HTMLInputElement>document.getElementById('password-log')
-    const data = {
-      'credentials': {
-        'email': email,
-        'password': password
-      }
-    }
-    // this.http.post(environment.apiServer + '/sign-in', data)
-    of({})
+  login(email: string, password: string, intendedPlanToPurchase: string) {
+    const params = new HttpParams()
+      .append('email', email)
+      .append('password', password)
+      .append('productTier', intendedPlanToPurchase);
+    this.http.get<UserResponse>(`${environment.apiServer}/login`, {params})
     .subscribe(
-      response => {
-        const user = JSON.parse(response['_body']).user
-        localStorage.setItem('token', user.token)
-        localStorage.setItem('id', user.id)
-        localStorage.setItem('user', user.email)
-        this.loginFailure = false
-        this.signUpFailure = false
-        this.setStatus()
-        this.router.navigate(['/home/'])
+      (response) => {
+        localStorage.setItem('userId', response.id);
+        localStorage.setItem('productTier', response.productTier);
+        this.loginFailure = false;
+        this.signUpFailure = false;
+        this.setStatus();
+        this.determineLoginNavigation(intendedPlanToPurchase);
       },
-      err => {
-        this.loginFailure = true
-        this.signUpFailure = false
-        emailField.value = ''
-        passwordField.value = ''
-      }
-    )
+      () => {
+        this.loginFailure = true;
+        this.signUpFailure = false;
+        const emailField = <HTMLInputElement>document.getElementById('emailLog');
+        const passwordField = <HTMLInputElement>document.getElementById('passwordLog');
+        emailField.value = '';
+        passwordField.value = '';
+      });
   }
 
-  signUp(email: string, password: string, password_confirmation: string) {
-    const newEmailField = <HTMLInputElement>document.getElementById('email-sign')
-    const newPasswordField = <HTMLInputElement>document.getElementById('password-sign')
-    const passwordConfirmField = <HTMLInputElement>document.getElementById('password-confirm-sign')
-    if (password == password_confirmation) {
-      const data = {
-        'credentials': {
-          'email': email,
-          'password': password,
-          'password_confirmation': password_confirmation
-        }
-      }
-      // this.http.post(environment.apiServer + '/sign-up', data)
-      of({})
+  signUp(email: string, password: string, passwordConfirmation: string, intendedPlanToPurchase: string) {
+    const emailField = <HTMLInputElement>document.getElementById('emailLog');
+    const passwordField = <HTMLInputElement>document.getElementById('passwordLog');
+    const passwordConfirmField = <HTMLInputElement>document.getElementById('passwordConfirmLog');
+    if (password === passwordConfirmation) {
+      const params = new HttpParams()
+        .append('email', email)
+        .append('password', password)
+        .append('productTier', intendedPlanToPurchase);
+      this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, {}, {params})
       .subscribe(
-        response => {
-          this.login(data.credentials.email, data.credentials.password)
-        },
-        err => {
-          this.signUpFailure = true
-          this.loginFailure = false
-          newEmailField.value = ''
-          newPasswordField.value = ''
-          passwordConfirmField.value = ''
+        (response) => {
+          localStorage.setItem('userId', response.id);
+          localStorage.setItem('productTier', response.productTier);
+          this.loginFailure = false;
+          this.signUpFailure = false;
+          this.setStatus();
+          this.determineLoginNavigation(intendedPlanToPurchase);
+        }, 
+        () => {
+          this.signUpFailure = true;
+          this.loginFailure = false;
+          emailField.value = '';
+          passwordField.value = '';
+          passwordConfirmField.value = '';
         }
       )
     } else {
       this.signUpFailure = true
       this.loginFailure = false
-      newEmailField.value = ''
-      newPasswordField.value = ''
-      passwordConfirmField.value = ''
+      emailField.value = '';
+      passwordField.value = '';
+      passwordConfirmField.value = '';
     }
   }
 
   signOut() {
-    let config = {}
-    config['headers'] = { Authorization:'Token token=' + localStorage.getItem('token')}
-    // this.http.delete(environment.apiServer + '/sign-out/' + localStorage.getItem('id'), config)
-    of({})
-    .subscribe(
-      data => {
-        localStorage.clear()
-        this.setStatus()
-        this.signOutFailure = false
-        this.router.navigate(['/'])
-      },
-      err => {
-        this.signOutFailure = true
-      }
-    )
+    localStorage.clear();
+    this.setStatus();
+    this.router.navigate(['/'])
   }
 
-  changePassword(oldPassword: string, newPassword: string) {
-    const oldField = <HTMLInputElement>document.getElementById('old')
-    const newField = <HTMLInputElement>document.getElementById('new')
-    if (oldPassword != newPassword ) {
-      const data = {
-        'passwords': {
-          'old': oldPassword,
-          'new': newPassword
-        }
-      }
-      let config = {}
-      config['headers'] = { Authorization:'Token token=' + localStorage.getItem('token')}
-      // this.http.patch(environment.apiServer + '/change-password/' + localStorage.getItem('id'), data, config)
-      of({})
-      .subscribe(
-        response => {
-          this.changePasswordSuccess = true
-          this.changePasswordFailure = false
-          oldField.value = ''
-          newField.value = ''
-        },
-        err => {
-          this.changePasswordSuccess = false
-          this.changePasswordFailure = true
-          oldField.value = ''
-          newField.value = ''
-        }
-      )
+  setStatus(): void {
+    this.loggedIn = !!localStorage.getItem('userId');
+  }
+
+  determineLoginNavigation(intendedPlanToPurchase: string): void {
+    if (intendedPlanToPurchase) {
+      this.router.navigate(['/plans/']);
     } else {
-      this.changePasswordSuccess = false
-      this.changePasswordFailure = true
-      oldField.value = ''
-      newField.value = ''
+      this.router.navigate(['/content/']);
     }
-  }
-
-  removeMessage() {
-    this.changePasswordFailure = false
-    this.changePasswordSuccess = false
-    this.signOutFailure = false
   }
 
 }

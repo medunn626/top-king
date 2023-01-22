@@ -30,7 +30,7 @@
 <div *ngIf="auth.signOutFailure" class="failure">
   <h5>There was an error signing out.</h5>
 </div>
-<div *ngIf="auth.isAdmin" class="admin">
+<div *ngIf="isAdmin" class="admin">
   <marquee direction="right" behavior="alternate">YOU ARE IN ADMIN VIEW!</marquee>
 </div>
 <main>

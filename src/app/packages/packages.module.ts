@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PackagesComponent } from './packages.component';
+import { PackagesService } from './packages.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { PackagesComponent } from './packages.component';
     MatDialogModule
   ],
   declarations: [PackagesComponent],
-  providers: []
+  providers: [PackagesService]
 })
 export class PackagesModule { }

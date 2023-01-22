@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
-
-interface Package {
-  id: number,
-  title: string,
-  descriptions: string[],
-  userHasThisPlan: boolean;
-}
+import { Package, PackagesService } from './packages.service';
 
 @Component({
   selector: 'app-packages',
@@ -21,19 +15,21 @@ export class PackagesComponent implements OnInit {
   packages: Package[];
   usersPackages: Package[];
   usersNonPackages: Package[];
+  updatePlanFailed = false;
   
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private packagesService: PackagesService
   ) { }
 
   ngOnInit() {
-    this.isLoggedIn = !!localStorage.getItem('token');
+    this.isLoggedIn = !!localStorage.getItem('userId');
     this.setOrUpdatePlans();
   }
 
   setOrUpdatePlans() {
-    this.usersCurrentPlan = +(localStorage.getItem('plan') ?? 0);
+    this.usersCurrentPlan = +(localStorage.getItem('productTier') ?? 0);
     this.populatePackages();
     this.usersPackages = this.packages.filter(p => p.userHasThisPlan);
     this.usersNonPackages = this.packages.filter(p => !p.userHasThisPlan);
@@ -43,7 +39,7 @@ export class PackagesComponent implements OnInit {
     this.packages = [
       {
         id: 1,
-        title: 'Bronze Plan',
+        title: 'Beginner',
         descriptions: [
           'New video every week',
           'Access to 10 exclusive videos',
@@ -53,7 +49,7 @@ export class PackagesComponent implements OnInit {
       },
       {
         id: 2,
-        title: 'Silver Plan',
+        title: 'Intermediate',
         descriptions: [
           'New video every week',
           'Access to 50 exclusive videos',
@@ -63,7 +59,7 @@ export class PackagesComponent implements OnInit {
       },
       {
         id: 3,
-        title: 'Gold Plan',
+        title: 'Elite',
         descriptions: [
           'Several videos every week',
           'Access to 100 exclusive videos',
@@ -76,7 +72,7 @@ export class PackagesComponent implements OnInit {
 
   purchasePlan(planNumber: number) {
     if (!this.isLoggedIn) {
-      localStorage.setItem('intentToPurchasePlan', planNumber + '');
+      localStorage.setItem('productTierIntendingToPurchase', planNumber + '');
       this.router.navigate(['login']);
     } else if (!!this.usersCurrentPlan) {
       this.confirmSwitchPlans(planNumber);
@@ -102,8 +98,14 @@ export class PackagesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        localStorage.setItem('plan', planNumber + '');
-        this.setOrUpdatePlans();
+        this.packagesService.setPlan(planNumber + '')
+        .subscribe(
+          (response) => {
+            localStorage.setItem('productTier', response.productTier);
+            this.setOrUpdatePlans();
+          },
+          () => this.updatePlanFailed = true
+        );
       }
     });
   }

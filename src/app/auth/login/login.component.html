@@ -11,14 +11,14 @@
     </div>
     <h1>Log In</h1>
     <label for="email">Email</label><br>
-    <input [(ngModel)]="user.email" id="email-log" name="email" type="email" placeholder="Email" required/><br>
+    <input [(ngModel)]="user.email" id="emailLog" name="email" type="email" placeholder="Email" required/><br>
     <br/>
     <label for="password">Password</label><br>
-    <input [(ngModel)]="user.password" id="password-log" name="password" type="password" placeholder="Password" required/><br/>
+    <input [(ngModel)]="user.password" id="passwordLog" name="password" type="password" placeholder="Password" required/><br/>
     <div *ngIf="isNewUser">
       <br/>
-      <label for="confirm_password">Confirm Password</label><br>
-      <input [(ngModel)]="user.password_confirmation" id="password-confirm-sign" name="confirm_password" type="password" name="password_confirmation" placeholder="Confirm Passsword" required/><br>
+      <label for="confirmPassword">Confirm Password</label><br>
+      <input [(ngModel)]="user.passwordConfirmation" id="passwordConfirmLog" name="confirmPassword" type="password" name="passwordConfirmation" placeholder="Confirm Passsword" required/><br>
     </div>
     <div class="lower">
       <a (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>

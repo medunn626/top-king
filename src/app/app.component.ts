@@ -9,17 +9,18 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title = 'top-king';
   date = '';
+  isAdmin = false;
 
   constructor(
     public auth: AuthService,
   ) {
     this.date = '' + new Date().getFullYear();
+    this.isAdmin = localStorage.getItem('productTier') === 'admin';
    }
 
   signOut() {
     this.auth.signOut()
   }
-
 
   ngOnInit() {
     this.auth.setStatus()

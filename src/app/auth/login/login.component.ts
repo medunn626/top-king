@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   user = <any>{};
   isNewUser = false;
+  intendedPlanToPurchase: string;
   showLoginFirstMessage = false;
 
   constructor(
@@ -18,20 +19,19 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('userId')) {
       this.router.navigate(['home'])
     }
-    this.showLoginFirstMessage = !!localStorage.getItem('intentToPurchasePlan');
+    this.intendedPlanToPurchase = localStorage.getItem('productTierIntendingToPurchase') ?? '';
+    this.showLoginFirstMessage = !!this.intendedPlanToPurchase;
   }
 
   login() {
-    // if (this.isNewUser) {
-    //   this.auth.signUp(this.user.email, this.user.password, this.user.password_confirmation)
-    // } else {
-    //   this.auth.login(this.user.email, this.user.password)
-    // }
-    const planToPurchase = localStorage.getItem('intentToPurchasePlan');
-    this.auth.mockLogin(planToPurchase);
+    if (this.isNewUser) {
+      this.auth.signUp(this.user.email, this.user.password, this.user.passwordConfirmation, this.intendedPlanToPurchase)
+    } else {
+      this.auth.login(this.user.email, this.user.password, this.intendedPlanToPurchase);
+    }
   }
 
   toggleIsNewUser() {

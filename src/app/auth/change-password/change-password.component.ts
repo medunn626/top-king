@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service'
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
@@ -18,17 +17,14 @@ export class ChangePasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!localStorage.getItem('token')) {
-      this.router.navigate(['/'])
-    }
   }
 
   changePassword() {
-    this.auth.changePassword(this.oldPassword, this.newPassword)
+    // this.auth.changePassword(this.oldPassword, this.newPassword)
   }
 
   removeMessage() {
-    this.auth.removeMessage()
+    // this.auth.removeMessage()
   }
 
   signOut() {

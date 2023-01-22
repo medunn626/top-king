@@ -24,7 +24,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit() {
     this.loadVideoData();
-    this.usersCurrentPlan = +(localStorage.getItem('plan') ?? 0);
+    this.usersCurrentPlan = +(localStorage.getItem('productTier') ?? 0);
     this.userAccessVideos = this.videos.filter(vid => vid.plansApplies.includes(this.usersCurrentPlan));
     const userHiddenVideos = this.videos.filter(vid => !vid.plansApplies.includes(this.usersCurrentPlan));
     this.latestUserHiddenVideo = userHiddenVideos[userHiddenVideos.length - 1];
