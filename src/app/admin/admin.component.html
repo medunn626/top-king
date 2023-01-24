@@ -1,0 +1,54 @@
+<div *ngIf="addFailure" class="failure">
+    <h5>There was a problem saving the video. Please try again</h5>
+</div>
+<div *ngIf="getFailure" class="failure">
+    <h5>There was a problem retrieving the videos.</h5>
+</div>
+<div id="wrapper">
+    <form (ngSubmit)="uploadVideo()" ngNativeValidate>
+        <h1>Admin Page</h1>
+        <label for="file">Upload a video</label>
+        <br/>
+        <input type="file" name="file" (change)="updateFile($event)"required/>
+        <br/>
+        <label>Which clients can see this video?</label>
+        <br/>
+        <mat-checkbox (change)="updateTiers($event.checked, '1')">Beginner</mat-checkbox>
+        <br/>
+        <mat-checkbox (change)="updateTiers($event.checked, '2')">Intemediate</mat-checkbox>
+        <br/>
+        <mat-checkbox (change)="updateTiers($event.checked, '3')">Elite</mat-checkbox>
+        <p class="submit button">
+            <input type="submit" value="Upload"/>
+        </p>
+        <br/>
+    </form>
+</div>
+
+<div id="wrapper">
+    <h1>Video Maintenance</h1>
+</div>
+<div *ngIf="maintenanceFailure" class="failure">
+    <h5>There was a problem saving the video. Please try again</h5>
+</div>
+
+<div id="wrapper">
+    <table style="min-width: 80%;" mat-table [dataSource]="dataSource">
+        <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+          <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+          <td mat-cell *matCellDef="let vid">
+            <span *ngIf="column === 'docName'">
+                <a (click)="deleteVideo(vid)">X</a>
+            </span>
+            {{ getFriendlyNames(vid[column]) }}
+            <span *ngIf="column !== 'docName'">
+                <a (click)="modifyVideo(vid)">Edit</a>
+              </span>
+            </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+</div>
+<br/>

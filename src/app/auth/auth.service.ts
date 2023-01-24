@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 export interface UserResponse {
-  id: string;
+  id?: number;
   productTier: string;
 }
 
@@ -30,7 +30,7 @@ export class AuthService {
     this.http.get<UserResponse>(`${environment.apiServer}/login`, {params})
     .subscribe(
       (response) => {
-        localStorage.setItem('userId', response.id);
+        localStorage.setItem('userId', '' + response.id);
         localStorage.setItem('productTier', response.productTier);
         this.loginFailure = false;
         this.signUpFailure = false;
@@ -59,7 +59,7 @@ export class AuthService {
       this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, {}, {params})
       .subscribe(
         (response) => {
-          localStorage.setItem('userId', response.id);
+          localStorage.setItem('userId', '' + response.id);
           localStorage.setItem('productTier', response.productTier);
           this.loginFailure = false;
           this.signUpFailure = false;

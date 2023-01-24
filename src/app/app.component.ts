@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from './auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'top-king';
   date = '';
   isAdmin = false;
@@ -19,10 +19,10 @@ export class AppComponent {
    }
 
   signOut() {
-    this.auth.signOut()
+    this.auth.signOut();
   }
 
   ngOnInit() {
-    this.auth.setStatus()
+    this.auth.setStatus();
   }
 }

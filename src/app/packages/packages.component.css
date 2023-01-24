@@ -30,7 +30,7 @@ h3 {
       font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
       font-weight: bold;
       text-align: center;
-      padding-bottom: 30px;
+      margin-bottom: -20px;
   }
   
   /** For the moment only webkit supports the background-clip:text; */

@@ -1,0 +1,32 @@
+.dialog {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.32) !important;
+    inset: 0;
+}
+
+.content {
+    background-color: white;
+    margin: 50% 15% 0 15%;
+    padding: 10px;
+}
+
+.dialog-buttons {
+    display: flex;
+	justify-content: right;
+	margin: 5px 8px 0 8px;
+}
+
+.cancel-button {
+    margin-left: 50%;
+}
+
+.action-button{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    border: none;
+    background-color: transparent;
+    color: goldenrod;
+}
