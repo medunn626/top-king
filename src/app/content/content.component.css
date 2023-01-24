@@ -144,3 +144,8 @@ outline: none;
     position: relative;
     top: 1px;
 }
+
+.failure {
+	text-align: center;
+	color: red;
+}

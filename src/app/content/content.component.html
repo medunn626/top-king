@@ -2,11 +2,14 @@
     <div id="wrapper">
         <h1>Training Content</h1>
     </div>
+    <div *ngIf="getVideosFailure" class="failure">
+        <h5>There was a problem retrieving the videos.</h5>
+    </div>
     <div *ngFor="let video of userAccessVideos" id="wrapper">
         <div>
-            <h4>{{ video.title }}</h4>
+            <h4>{{ video.docName }}</h4>
             <video width="320" height="240" controls>
-                <source [src]="video.source" type="video/mp4">
+                <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
             </video>
         </div>
     </div>
@@ -19,7 +22,7 @@
         </div>
         <div id="wrapper">
             <div>
-                <h4>{{ latestUserHiddenVideo.title }}</h4>
+                <h4>{{ latestUserHiddenVideo.docName }}</h4>
                 <video width="320" height="240" controls>
                     <source src="" type="video/mp4">
                 </video>

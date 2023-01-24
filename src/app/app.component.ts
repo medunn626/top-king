@@ -9,13 +9,11 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   title = 'top-king';
   date = '';
-  isAdmin = false;
 
   constructor(
     public auth: AuthService,
   ) {
     this.date = '' + new Date().getFullYear();
-    this.isAdmin = localStorage.getItem('productTier') === 'admin';
    }
 
   signOut() {

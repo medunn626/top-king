@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-interface Video {
-  plansApplies: string[];
-  title?: string;
-  source?: string;
-}
+import { ContentService, Video } from './content.service';
 
 @Component({
   selector: 'app-content',
@@ -15,48 +10,35 @@ interface Video {
 export class ContentComponent implements OnInit {
   data = <any>{};
   usersCurrentPlan = '';
-  videos: Video[];
+  allVideos: Video[];
   userAccessVideos: Video[];
   latestUserHiddenVideo: Video;
-  isAdmin = false;
+  getVideosFailure = false;
   
   constructor(
     public router: Router,
+    private readonly contentService: ContentService
   ) { }
 
   ngOnInit() {
-    this.isAdmin = localStorage.getItem('productTier') === 'admin';
-    this.loadVideoData();
     this.usersCurrentPlan = localStorage.getItem('productTier') ?? '';
-    this.userAccessVideos = this.videos.filter(vid => vid.plansApplies.includes(this.usersCurrentPlan));
-    const userHiddenVideos = this.videos.filter(vid => !vid.plansApplies.includes(this.usersCurrentPlan));
-    this.latestUserHiddenVideo = userHiddenVideos[userHiddenVideos.length - 1];
+    this.loadVideoData();
   }
 
-  // Mock right now but would grab from a service 
-  loadVideoData() {
-    this.videos = [
-      {
-        title: 'Compeition',
-        source: '/assets/competition.mp4',
-        plansApplies: ['1', '2', '3', 'admin']
+
+  private loadVideoData() {
+    this.contentService.getVideosForTier('admin').subscribe(
+      (videos) => {
+        this.allVideos = videos;
+        this.updateScreenData();
       },
-      {
-        title: 'Grocery Shopping',
-        source: '/assets/grocery.mp4',
-        plansApplies: ['2', '3', 'admin']
-      },
-      {
-        title: 'Cheat Meal',
-        source: '/assets/grocery.mp4',
-        plansApplies: ['3', 'admin']
-      },
-      {
-        title: 'Powerball',
-        source: '/assets/powerball.mp4',
-        plansApplies: ['3', 'admin']
-      }
-    ]
+      () => this.getVideosFailure = true);
+  }
+
+  private updateScreenData() {
+    this.userAccessVideos = this.allVideos.filter(vid => vid.productTiersAppliedTo.includes(this.usersCurrentPlan));
+    const userHiddenVideos = this.allVideos.filter(vid => !vid.productTiersAppliedTo.includes(this.usersCurrentPlan));
+    this.latestUserHiddenVideo = userHiddenVideos[userHiddenVideos.length - 1];
   }
 
 }

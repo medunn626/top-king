@@ -16,6 +16,7 @@ export class AuthService {
   signOutFailure = false;
   changePasswordSuccess = false;
   changePasswordFailure = false;
+  isAdmin = false;
 
   constructor(
     public router: Router,
@@ -91,6 +92,7 @@ export class AuthService {
 
   setStatus(): void {
     this.loggedIn = !!localStorage.getItem('userId');
+    this.isAdmin = this.loggedIn && localStorage.getItem('productTier') === 'admin';
   }
 
   determineLoginNavigation(intendedPlanToPurchase: string): void {
