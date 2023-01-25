@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
@@ -14,7 +14,7 @@ import { ModifyVideoDialog } from './modify-video-dialog.component.html/modify-v
     CommonModule,
     RouterModule,
     FormsModule,
-    MatCheckboxModule,
+    MatRadioModule,
     MatTableModule,
     MatIconModule
   ],

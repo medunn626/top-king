@@ -12,12 +12,8 @@ export class ModifyVideoDialog {
   videoName = '';
   videoTiers = '';
 
-  updateTiers(checkBoxvalue: boolean, stringValue) {
-    if (checkBoxvalue) {
-      this.videoTiers+= stringValue;
-    } else {
-      this.videoTiers = this.videoTiers.replace(stringValue, '');
-    }
+  updateTiers(stringValue: string) {
+    this.videoTiers = stringValue;
   }
 
   cancel() {

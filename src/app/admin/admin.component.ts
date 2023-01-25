@@ -38,12 +38,8 @@ export class AdminComponent implements OnInit {
     this.file = files[0];
   }
 
-  updateTiers(checkBoxvalue: boolean, stringValue) {
-    if (checkBoxvalue) {
-      this.videoTiers+= stringValue;
-    } else {
-      this.videoTiers = this.videoTiers.replace(stringValue, '');
-    }
+  updateTiers(stringValue: string) {
+    this.videoTiers = stringValue;
   }
 
   uploadVideo() {

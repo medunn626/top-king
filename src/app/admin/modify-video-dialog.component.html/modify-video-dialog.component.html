@@ -5,11 +5,13 @@
         </div>
         <label for="email">Which clients can see {{videoName}}?</label>
         <br/>
-        <mat-checkbox (change)="updateTiers($event.checked, '1')">Beginner</mat-checkbox>
-        <br/>
-        <mat-checkbox (change)="updateTiers($event.checked, '2')">Intemediate</mat-checkbox>
-        <br/>
-        <mat-checkbox (change)="updateTiers($event.checked, '3')">Elite</mat-checkbox>
+        <mat-radio-group (change)="updateTiers($event.value)">
+            <mat-radio-button value="123">All</mat-radio-button>
+            <br/>
+            <mat-radio-button value="23">Intemediate & Elite Only</mat-radio-button>
+            <br/>
+            <mat-radio-button value="3">Elite Only</mat-radio-button>
+        </mat-radio-group>
         <div class="dialog-buttons" mat-dialog-actions>
             <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
             <button class="action-button" mat-button (click)="update()">Update</button>
