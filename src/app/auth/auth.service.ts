@@ -8,6 +8,14 @@ export interface UserResponse {
   productTier: string;
 }
 
+export interface UserRequest {
+  id?: number;
+  email: string;
+  password: string;
+  phoneNumber?: string;
+  productTier?: string;
+}
+
 @Injectable()
 export class AuthService {
   loggedIn = false;
@@ -23,11 +31,11 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  login(email: string, password: string, intendedPlanToPurchase: string) {
+  login(userToSave: UserRequest) {
     const params = new HttpParams()
-      .append('email', email)
-      .append('password', password)
-      .append('productTier', intendedPlanToPurchase);
+      .append('email', userToSave.email)
+      .append('password', userToSave.password)
+      .append('productTier', userToSave.productTier ?? '');
     this.http.get<UserResponse>(`${environment.apiServer}/login`, {params})
     .subscribe(
       (response) => {
@@ -36,7 +44,7 @@ export class AuthService {
         this.loginFailure = false;
         this.signUpFailure = false;
         this.setStatus();
-        this.determineLoginNavigation(intendedPlanToPurchase);
+        this.determineLoginNavigation(userToSave.productTier ?? '');
       },
       () => {
         this.loginFailure = true;
@@ -48,40 +56,31 @@ export class AuthService {
       });
   }
 
-  signUp(email: string, password: string, passwordConfirmation: string, intendedPlanToPurchase: string) {
+  signUp(userToCreate: UserRequest) {
     const emailField = <HTMLInputElement>document.getElementById('emailLog');
     const passwordField = <HTMLInputElement>document.getElementById('passwordLog');
     const passwordConfirmField = <HTMLInputElement>document.getElementById('passwordConfirmLog');
-    if (password === passwordConfirmation) {
-      const params = new HttpParams()
-        .append('email', email)
-        .append('password', password)
-        .append('productTier', intendedPlanToPurchase);
-      this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, {}, {params})
-      .subscribe(
-        (response) => {
-          localStorage.setItem('userId', '' + response.id);
-          localStorage.setItem('productTier', response.productTier);
-          this.loginFailure = false;
-          this.signUpFailure = false;
-          this.setStatus();
-          this.determineLoginNavigation(intendedPlanToPurchase);
-        }, 
-        () => {
-          this.signUpFailure = true;
-          this.loginFailure = false;
-          emailField.value = '';
-          passwordField.value = '';
-          passwordConfirmField.value = '';
-        }
-      )
-    } else {
-      this.signUpFailure = true
-      this.loginFailure = false
-      emailField.value = '';
-      passwordField.value = '';
-      passwordConfirmField.value = '';
-    }
+    const phoneNumberField = <HTMLInputElement>document.getElementById('phoneNumberLog');
+
+    this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, userToCreate)
+    .subscribe(
+      (response) => {
+        localStorage.setItem('userId', '' + response.id);
+        localStorage.setItem('productTier', response.productTier);
+        this.loginFailure = false;
+        this.signUpFailure = false;
+        this.setStatus();
+        this.determineLoginNavigation(userToCreate.productTier ?? '');
+      }, 
+      () => {
+        this.signUpFailure = true;
+        this.loginFailure = false;
+        emailField.value = '';
+        passwordField.value = '';
+        passwordConfirmField.value = '';
+        phoneNumberField.value = '';
+      }
+    )
   }
 
   signOut() {

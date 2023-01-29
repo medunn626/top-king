@@ -1,6 +1,6 @@
 <div id="wrapper">
   <form ngNativeValidate>
-    <div *ngIf="showLoginFirstMessage">
+    <div *ngIf="showLoginFirstMessage" class="failure">
       <h5>Please log in or create an account so that we can complete your purchase.</h5>
     </div>
     <div *ngIf="auth.loginFailure" class="failure">
@@ -9,16 +9,31 @@
     <div *ngIf="auth.signUpFailure" class="failure">
       <h5>Please try again. This username already exists or you have entered the fields incorrectly.</h5>
     </div>
+    <div *ngIf="!passwordsMatch" class="failure">
+      <h5>Please try again. The passwords entered do not match.</h5>
+    </div>
     <h1>Log In</h1>
-    <label for="email">Email</label><br>
-    <input [(ngModel)]="user.email" id="emailLog" name="email" type="email" placeholder="Email" required/><br>
+    <label for="email">Email</label>
     <br/>
-    <label for="password">Password</label><br>
-    <input [(ngModel)]="user.password" id="passwordLog" name="password" type="password" placeholder="Password" required/><br/>
+    <input [(ngModel)]="user.email" id="emailLog" name="email" type="email" placeholder="e.g. name@gmail.com" required/>
+    <br/>
+    <br/>
+    <label for="password">Password</label>
+    <br/>
+    <input [(ngModel)]="user.password" id="passwordLog" name="password" type="password" placeholder="Password" required/>
+    <br/>
     <div *ngIf="isNewUser">
       <br/>
-      <label for="confirmPassword">Confirm Password</label><br>
-      <input [(ngModel)]="user.passwordConfirmation" id="passwordConfirmLog" name="confirmPassword" type="password" name="passwordConfirmation" placeholder="Confirm Passsword" required/><br>
+      <label for="confirmPassword">Confirm Password</label>
+      <br/>
+      <input [(ngModel)]="user.passwordConfirmation" id="passwordConfirmLog" name="confirmPassword" type="password" name="passwordConfirmation" placeholder="Confirm Passsword" required/>
+      <br/>
+      <br/>
+      <label for="phoneNumber">Phone Number (optional)</label>
+      <br/>
+      <i>Used for new video notifications and consulting calls only.<br/>Message and data rates apply.</i>
+      <br/>
+      <input [(ngModel)]="user.phoneNumber" appPhoneMask id="phoneNumberLog" name="phoneNumber" type="phone" name="phoneNumber" placeholder="(000)-000-0000"/>
     </div>
     <div class="lower">
       <a (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
