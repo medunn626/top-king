@@ -5,13 +5,6 @@ import { environment } from 'src/environments/environment';
 import { UserResponse } from '../auth/auth.service';
 import { Observable } from 'rxjs';
 
-export interface Package {
-  id: number,
-  title: string,
-  descriptions: string[],
-  userHasThisPlan: boolean;
-}
-
 @Injectable()
 export class PackagesService {
 

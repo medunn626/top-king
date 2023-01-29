@@ -3,25 +3,19 @@
         <h1>Plans</h1>
     </div>
     <br/>
-    <div *ngIf="usersPackages.length" id="wrapper">
-        <h4>Your Current Plan</h4>
+    <div *ngIf="updatePlanFailed" class="failure">
+        <h5>There was a problem updating your plan. Please try again later or contact us for assistance.</h5>
     </div>
-    <div *ngFor="let package of usersPackages" id="wrapper">
-        <div>
-            <h3>{{ package.title }}</h3>
-            <ul *ngFor="let desc of package.descriptions">
-                <li>{{ desc }}</li>
-            </ul>
-        </div>
+    <div *ngIf="usersPackage" id="wrapper">
+        <h4>Your Current Plan: {{ usersPackage?.title }} </h4>
     </div>
     <br/>
-    <br/>
-    <div *ngIf="usersPackages.length" id="wrapper">
+    <div *ngIf="usersPackage" id="wrapper">
         <h4>Other Plans</h4>
     </div>
     <div *ngFor="let package of usersNonPackages" id="wrapper">
-        <div>
-            <h3>{{ package.title }}</h3>
+        <div class="package-container">
+            <h3 class="package-title">{{ package.title }}</h3>
             <ul *ngFor="let desc of package.descriptions">
                 <li>{{ desc }}</li>
             </ul>
@@ -30,7 +24,29 @@
                 class="purchase-button"
                 (click)="purchasePlan(package.id)"
                 type="submit"
-                [value]="usersCurrentPlan === 0 ? 'Purchase' : 'Switch'"/>
+                [value]="usersCurrentPlan === 0 ? 'Buy for $' + package.price : 
+                    determineSwitchPriceText(package.price)"/>
+            </p>
+            <br/>
+        </div>
+    </div>
+    <div id="wrapper">
+        <h1>Consulting</h1>
+    </div>
+    <br/>
+    <div id="wrapper">
+        <div class="package-container">
+            <h3 class="package-title">Consulation Call</h3>
+            <ul>
+                <li>Personal 30-min face-to-face or voice call</li>
+                <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>
+            </ul>
+            <p class="purchase button">
+                <input 
+                class="purchase-button"
+                (click)="triggerConfirmCallDialog()"
+                type="submit"
+                value="Book for $100"/>
             </p>
             <br/>
         </div>

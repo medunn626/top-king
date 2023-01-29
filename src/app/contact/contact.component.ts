@@ -49,6 +49,6 @@ export class ContactCompnent {
 
     document.body.appendChild(mapForm);
 
-    mapForm.submit();  
+    mapForm.submit();
   }
 }

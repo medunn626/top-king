@@ -151,4 +151,12 @@ h3 {
       position: relative;
       top: 1px;
   }
+
+  .package-title {
+    text-align: center;
+  }
+
+  .package-container {
+    width: 300px;
+  }
   
