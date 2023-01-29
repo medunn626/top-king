@@ -154,6 +154,10 @@ input {
     background-size: 100%;
 }
 
+.screen-title-prod {
+    background-image: url("/top-king/assets/lion.png");
+}
+
 .get-started-btn {
     width: 100% !important;
 }

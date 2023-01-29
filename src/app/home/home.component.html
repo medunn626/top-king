@@ -1,9 +1,9 @@
 <div>
-    <div id="wrapper" class="screen-title">
+    <div id="wrapper" [ngClass]="{'screen-title-prod' : environment.production}" class="screen-title">
         <h1>Top King Training</h1>
     </div>
     <div id="wrapper">
-        <img src="/assets/home1.jpg" width="350" height="280"/>
+        <img [src]="topImg" width="350" height="280"/>
     </div>
     <div id="wrapper">
         <h3>Why Should You Train With Me?</h3>
@@ -27,7 +27,7 @@
         <h3>Lose Weight & Get Cut!</h3>
     </div>
     <div id="wrapper">
-        <img src="/assets/home2.jpg" width="350" height="280"/>
+        <img [src]="bottomImg" width="350" height="280"/>
     </div>
     <div id="wrapper">
         <h3>Custom Workout Schedule</h3>

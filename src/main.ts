@@ -6,6 +6,9 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+} else {
+  const iconField = <HTMLInputElement>document.getElementById('tabIcon');
+  iconField.setAttribute('href', '/assets/tko-logo.jpg');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
