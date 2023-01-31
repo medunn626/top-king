@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 export interface UserResponse {
   id?: number;
   productTier: string;
+  phoneNumber?: string;
 }
 
 export interface UserRequest {
@@ -41,6 +42,7 @@ export class AuthService {
       (response) => {
         localStorage.setItem('userId', '' + response.id);
         localStorage.setItem('productTier', response.productTier);
+        localStorage.setItem('phoneNumber', response.phoneNumber ?? '');
         this.loginFailure = false;
         this.signUpFailure = false;
         this.setStatus();
@@ -67,6 +69,7 @@ export class AuthService {
       (response) => {
         localStorage.setItem('userId', '' + response.id);
         localStorage.setItem('productTier', response.productTier);
+        localStorage.setItem('phoneNumber', response.phoneNumber ?? '');
         this.loginFailure = false;
         this.signUpFailure = false;
         this.setStatus();

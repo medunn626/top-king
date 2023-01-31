@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { EMPTY } from 'rxjs';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConsultingFormDialog } from './consulting-form-dialog/consulting-form-dialog.component';
 import { PackagesService } from './packages.service';
 
 export interface Package {
@@ -135,15 +137,17 @@ export class PackagesComponent implements OnInit {
   }
 
   triggerConfirmCallDialog() {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
+    const dialogRef = this.dialog.open(ConsultingFormDialog, {
       disableClose: true,
       width: '75%'
     });
-    dialogRef.componentInstance.confirmMessage = `Please confirm you would like to book this call`;
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // TODO
+    dialogRef.afterClosed().subscribe(phoneNumber => {
+      if (phoneNumber) {
+        this.packagesService.setupConsultingCall(phoneNumber)
+        .subscribe(
+          () => EMPTY,
+          () => this.updatePlanFailed = true
+        );
       }
     });
   }

@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminService, Video } from './admin.service';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
-import { ModifyVideoDialog } from './modify-video-dialog.component.html/modify-video-dialog.component';
+import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
 
 @Component({
   selector: 'app-admin',

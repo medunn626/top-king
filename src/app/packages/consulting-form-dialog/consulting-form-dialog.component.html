@@ -1,0 +1,21 @@
+<div class="dialog" cdkFocusRegionStart>
+    <div class="content">
+        <div mat-dialog-content>
+            <h4>Book Consultation</h4>
+        </div>
+        <label>You will receive a text message with instructions on how to book.</label>
+        <br/>
+        <div *ngIf="!hasProvidedPhoneNumber">
+            <label for="phoneNumber">Phone Number</label>
+            <br/>
+            <i>Used for new video notifications and consulting calls only. Message and data rates apply.</i>
+            <br/>
+            <br/>
+            <input [(ngModel)]="data.phoneNumber" appPhoneMask id="phoneNumberLog" name="phoneNumber" type="phone" placeholder="e.g. (000)-000-0000" required/>
+        </div>
+        <div class="dialog-buttons" mat-dialog-actions>
+            <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
+            <button class="action-button" mat-button (click)="confirm()">Confirm</button>
+        </div>
+    </div>
+</div>

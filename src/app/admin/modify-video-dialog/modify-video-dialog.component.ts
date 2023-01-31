@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: '.modify-video-dialog',
+  selector: 'app-modify-video-dialog',
   templateUrl: './modify-video-dialog.component.html',
   styleUrls: ['./modify-video-dialog.component.css']
 })

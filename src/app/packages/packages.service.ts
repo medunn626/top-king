@@ -18,4 +18,8 @@ export class PackagesService {
     return this.http.put<UserResponse>(`${environment.apiServer}/plans/user/${userId}/plan/${productTier}`, {});
   }
 
+  setupConsultingCall(phoneNumber: string) {
+    return this.http.post<void>(`${environment.apiServer}/consultation/${phoneNumber}`, {});
+  }
+
 }

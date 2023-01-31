@@ -7,7 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
-import { ModifyVideoDialog } from './modify-video-dialog.component.html/modify-video-dialog.component';
+import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
 
 @NgModule({
   imports: [
