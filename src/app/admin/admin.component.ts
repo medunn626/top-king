@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit {
   addFailure = false;
   getFailure = false;
   maintenanceFailure = false;
+  notificationMethod = '';
 
   constructor(
     public dialog: MatDialog,
@@ -42,12 +43,17 @@ export class AdminComponent implements OnInit {
     this.videoTiers = stringValue;
   }
 
+  updateNotificationMethods(stringValue: string) {
+    this.notificationMethod = stringValue;
+  }
+
   uploadVideo() {
-    if (this.videoTiers && this.file) {
+    if (this.videoTiers && this.notificationMethod && this.file) {
       const formData = new FormData();
       formData.append('file', this.file);
 
-      this.adminService.uploadVideo(formData, this.videoTiers).subscribe(
+      this.adminService.uploadVideo(formData, this.videoTiers, this.notificationMethod)
+      .subscribe(
         () => this.getVideos(),
         () => this.addFailure = true
       )
