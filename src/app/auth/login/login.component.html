@@ -33,7 +33,16 @@
       <br/>
       <i>Used for new video notifications and consulting calls only.<br/>Message and data rates apply.</i>
       <br/>
-      <input [(ngModel)]="user.phoneNumber" appPhoneMask id="phoneNumberLog" name="phoneNumber" type="phone" placeholder="(000)-000-0000"/>
+      <input
+        [(ngModel)]="user.phoneNumber"
+        appPhoneMask
+        id="phoneNumberLog"
+        name="phoneNumber"
+        type="phone"
+        placeholder="(000)-000-0000"
+        pattern="[0-9]*"
+        inputmode="numeric"
+      />
     </div>
     <div class="lower">
       <a (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>

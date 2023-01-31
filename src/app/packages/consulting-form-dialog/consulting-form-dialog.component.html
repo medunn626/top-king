@@ -11,7 +11,17 @@
             <i>Used for new video notifications and consulting calls only. Message and data rates apply.</i>
             <br/>
             <br/>
-            <input [(ngModel)]="data.phoneNumber" appPhoneMask id="phoneNumberLog" name="phoneNumber" type="phone" placeholder="e.g. (000)-000-0000" required/>
+            <input
+                [(ngModel)]="data.phoneNumber"
+                appPhoneMask
+                id="phoneNumberLog"
+                name="phoneNumber"
+                type="phone"
+                placeholder="e.g. (000)-000-0000" 
+                pattern="[0-9]*"
+                inputmode="numeric"
+                required
+            />
         </div>
         <div class="dialog-buttons" mat-dialog-actions>
             <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
