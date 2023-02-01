@@ -18,18 +18,44 @@
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/home">Home</a></li>
-      <li *ngIf="auth.loggedIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/content">View Training Content</a></li>
-      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/plans">Plans</a></li>
-      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/contact">Contact Top King</a></li>
-      <li *ngIf="auth.loggedIn && auth.isAdmin" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a class="nav-link" routerLink="/admin">Admin</a></li>
-      <li *ngIf="!auth.loggedIn"><a><input class="btn-warning" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log In" routerLink="/login"/></a></li>
-      <li *ngIf="auth.loggedIn"><a><input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/></a></li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li *ngIf="auth.loggedIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <a class="nav-link" routerLink="/content">View Training Content</a>
+      </li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <a class="nav-link" routerLink="/plans">Plans</a>
+      </li>
+      <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <a class="nav-link" routerLink="/contact">Contact Top King</a>
+      </li>
+      <li *ngIf="auth.loggedIn">
+        <a>
+          <input class="btn-warning affiliate-btn" (click)="triggerAffiliateDialog()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Become an Affiliate!"/>
+        </a>
+      </li>
+      <li *ngIf="auth.loggedIn && auth.isAdmin" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <a class="nav-link" routerLink="/admin">Admin</a>
+      </li>
+      <li *ngIf="!auth.loggedIn">
+        <a>
+          <input class="btn-warning" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log In" routerLink="/login"/>
+        </a>
+      </li>
+      <li *ngIf="auth.loggedIn">
+        <a>
+          <input class="btn-warning" (click)="signOut()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" type="submit" value="Log Out"/>
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
 <div *ngIf="auth.signOutFailure" class="failure">
   <h5>There was an error signing out.</h5>
+</div>
+<div *ngIf="referralError" class="failure">
+  <h5>There was an error saving the referral.</h5>
 </div>
 <main>
   <router-outlet></router-outlet>

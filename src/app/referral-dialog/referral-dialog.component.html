@@ -1,0 +1,41 @@
+<div class="dialog" cdkFocusRegionStart>
+    <div class="content">
+        <div mat-dialog-content>
+            <h3 class="header">Refer and receive commision!</h3>
+        </div>
+        <br/>
+        <form ngNativeValidate>
+            <label for="clientName">Your Name</label>
+            <br/>
+            <input 
+                [(ngModel)]="data.clientName"
+                id="clientName"
+                name="clientName"
+                type="text"
+                placeholder="e.g. Martin"
+                size="30"
+                required
+            />
+            <br/>
+            <br/>
+            <label for="referralEmail">Referral Email</label>
+            <br/>
+            <input
+                [(ngModel)]="data.referralEmail"
+                id="referralEmail"
+                name="referralEmail"
+                type="email"
+                placeholder="e.g. name@gmail.com" 
+                size="30"
+                required
+            />
+            <br/>
+            <br/>
+            <i>Your referral needs to create an account before you receive commision.</i>
+            <div class="dialog-buttons" mat-dialog-actions>
+                <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
+                <button class="action-button" mat-button (click)="confirm()">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

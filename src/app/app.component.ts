@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,23 +17,33 @@ export class AppComponent implements OnInit {
   igLink = '/assets/ig.png';
   ytLink = '/assets/yt.png';
   ttLink = '/assets/tt.png';
+  referralError = false;
 
   constructor(
     public auth: AuthService,
+    public dialog: MatDialog
   ) {
     this.date = '' + new Date().getFullYear();
     this.setSrcLinksForProd();
    }
 
-  signOut() {
-    this.auth.signOut();
-  }
-
-  ngOnInit() {
+   ngOnInit(): void {
     this.auth.setStatus();
   }
 
-  private setSrcLinksForProd() {
+  signOut(): void {
+    this.auth.signOut();
+  }
+
+  triggerAffiliateDialog(): void {
+    const dialogRef = this.dialog.open(ReferralDialogComponent, {
+      disableClose: true,
+      width: '75%'
+    });
+    dialogRef.afterClosed().subscribe(success => this.referralError = !success);
+  }
+
+  private setSrcLinksForProd(): void {
     if (environment.production) {
       this.logoLink = '/top-king' + this.logoLink;
       this.fbLink = '/top-king' + this.fbLink;

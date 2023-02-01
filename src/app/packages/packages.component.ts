@@ -108,14 +108,14 @@ export class PackagesComponent implements OnInit {
   }
 
   confirmSwitchPlans(planNumber: number): void {
-    this.triggerConfirmDialog('switch to', planNumber);
+    this.triggerConfirmPlanDialog('switch to', planNumber);
   }
 
   confirmGetPlan(planNumber: number): void {
-    this.triggerConfirmDialog('purchase this', planNumber);
+    this.triggerConfirmPlanDialog('purchase this', planNumber);
   }
 
-  triggerConfirmDialog(specificText: string, planNumber: number): void {
+  triggerConfirmPlanDialog(specificText: string, planNumber: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialog, {
       disableClose: true,
       width: '75%'

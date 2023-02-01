@@ -9,6 +9,7 @@ import { ContactModule } from './contact/contact.module';
 import { ContentModule } from './content/content.module';
 import { HomeModule } from './home/home.module';
 import { PackagesModule } from './packages/packages.module';
+import { ReferralDialogModule } from './referral-dialog/referral-dialog.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PackagesModule } from './packages/packages.module';
     ContactModule,
     PackagesModule,
     ContentModule,
-    HomeModule
+    HomeModule,
+    ReferralDialogModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
