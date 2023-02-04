@@ -9,7 +9,12 @@
         <h1>Admin Page</h1>
         <label for="file">Upload a video</label>
         <br/>
-        <input type="file" name="file" (change)="updateFile($event)"required/>
+        <input type="file" name="file" (change)="updateFile($event)" required/>
+        <br/>
+        <label for="videoName">Video Name</label>
+        <br/>
+        <input [(ngModel)]="videoName" size="30" type="text" name="videoName" required/>
+        <br/>
         <br/>
         <label>Which clients can see this video?</label>
         <br/>

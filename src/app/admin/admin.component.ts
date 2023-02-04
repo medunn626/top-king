@@ -11,6 +11,7 @@ import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.com
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  videoName: string;
   file: File;
   videos: Video[];
   videoTiers = '';
@@ -48,11 +49,14 @@ export class AdminComponent implements OnInit {
   }
 
   uploadVideo() {
-    if (this.videoTiers && this.notificationMethod && this.file) {
+    if (this.videoTiers && 
+        this.notificationMethod && 
+        this.videoName &&
+        this.file) {
       const formData = new FormData();
       formData.append('file', this.file);
 
-      this.adminService.uploadVideo(formData, this.videoTiers, this.notificationMethod)
+      this.adminService.uploadVideo(formData, this.videoTiers, this.videoName, this.notificationMethod)
       .subscribe(
         () => this.getVideos(),
         () => this.addFailure = true

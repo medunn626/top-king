@@ -18,8 +18,8 @@ export class AdminService {
     private http: HttpClient
   ) { }
 
-  uploadVideo(file: any, tiers: string, method: string): Observable<any> {
-    return this.http.post<void>(`${environment.apiServer}/videos/upload/tiers/${tiers}/notify/${method}`, file);
+  uploadVideo(file: any, tiers: string, name: string, method: string): Observable<any> {
+    return this.http.post<void>(`${environment.apiServer}/videos/upload/tiers/${tiers}/name/${name}/notify/${method}`, file);
   }
 
   updateTiersOnVideo(videoId: number, tiers: string): Observable<any> {
