@@ -1,17 +1,22 @@
 <div class="dialog" cdkFocusRegionStart>
     <div class="content">
         <div mat-dialog-content>
-            <h4>Modify Client Access</h4>
+            <h4>{{ isUpdatingTier ? 'Modify Client Access' : 'Modify Video Name' }}</h4>
         </div>
-        <label>Which clients can see {{videoName}}?</label>
-        <br/>
-        <mat-radio-group (change)="updateTiers($event.value)">
-            <mat-radio-button value="123">All</mat-radio-button>
+        <div *ngIf="isUpdatingTier">
+            <label>Which clients can see {{videoName}}?</label>
             <br/>
-            <mat-radio-button value="23">Intemediate & Elite Only</mat-radio-button>
-            <br/>
-            <mat-radio-button value="3">Elite Only</mat-radio-button>
-        </mat-radio-group>
+            <mat-radio-group (change)="updateTiers($event.value)">
+                <mat-radio-button value="123">All</mat-radio-button>
+                <br/>
+                <mat-radio-button value="23">Intemediate & Elite Only</mat-radio-button>
+                <br/>
+                <mat-radio-button value="3">Elite Only</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div *ngIf="!isUpdatingTier">
+            <input [(ngModel)]="updatedVideoName" type="text"/>
+        </div>
         <div class="dialog-buttons" mat-dialog-actions>
             <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
             <button class="action-button" mat-button (click)="update()">Update</button>

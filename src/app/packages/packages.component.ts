@@ -51,7 +51,8 @@ export class PackagesComponent implements OnInit {
         id: 1,
         title: 'Beginner',
         descriptions: [
-          'Videos showing the basics of working out',
+          'This program will provide world renown introduction fitness exercises to help incorporate ' +
+          'into your daily exercises including free weights & calisthenics!!'
         ],
         price: 49.99,
         userHasThisPlan: this.usersCurrentPlan === 1
@@ -60,7 +61,7 @@ export class PackagesComponent implements OnInit {
         id: 2,
         title: 'Intermediate',
         descriptions: [
-          'Includes the basics with some machines to gain muscle & strength'
+          'This program includes muscle and strength training exercises to take basic training to next level with machines and much more!!'
         ],
         price: 100,
         userHasThisPlan: this.usersCurrentPlan === 2
@@ -69,10 +70,10 @@ export class PackagesComponent implements OnInit {
         id: 3,
         title: 'Elite',
         descriptions: [
-          'Unlimited videos',
-          'Diet tips & hacks',
-          'Cutting program for people who want to get cut or lose weight',
-          'Also includes all of the above plans',
+          'Unlimited videos for LIFE!!',
+          'Diet tips & hacks!',
+          'Cutting program for people who want to get cut or lose weight!',
+          'Also includes all of the above plans incorporating supersets, drop sets, different innovative exercises to hit the muscle from different angles and many more!!'
         ],
         price: 150,
         userHasThisPlan: this.usersCurrentPlan === 3
@@ -86,11 +87,11 @@ export class PackagesComponent implements OnInit {
       if (currentPrice < newPrice) {
         const calculatedPrice = newPrice - currentPrice;
         const roundedPrice = Math.round(calculatedPrice);
-        return 'Switch for $' + roundedPrice
+        return 'Switch for $' + roundedPrice + '/month'
       } else {
         const calculatedPrice = currentPrice - newPrice;
         const roundedPrice = Math.round(calculatedPrice);
-        return 'Save $' + roundedPrice;
+        return 'Save $' + roundedPrice + '/month';
       }
     }
     return 'Switch';

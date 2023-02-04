@@ -26,6 +26,10 @@ export class AdminService {
     return this.http.put<void>(`${environment.apiServer}/videos/update/id/${videoId}/tiers/${tiers}`, {});
   }
 
+  updateVideoName(videoId: number, name: string): Observable<any> {
+    return this.http.put<void>(`${environment.apiServer}/videos/update/id/${videoId}/name/${name}`, {});
+  }
+
   removeVideo(videoId: number): Observable<any> {
     return this.http.delete<void>(`${environment.apiServer}/videos/delete/id/${videoId}`);
   }

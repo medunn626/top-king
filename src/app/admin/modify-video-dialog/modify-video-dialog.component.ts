@@ -8,9 +8,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ModifyVideoDialog {
   constructor(public dialogRef: MatDialogRef<ModifyVideoDialog>) {}
-  
+  isUpdatingTier: boolean;
   videoName = '';
   videoTiers = '';
+  updatedVideoName: string;
 
   updateTiers(stringValue: string) {
     this.videoTiers = stringValue;
@@ -21,6 +22,10 @@ export class ModifyVideoDialog {
   }
 
   update() {
-    this.dialogRef.close(this.videoTiers);
+    if (this.isUpdatingTier) {
+      this.dialogRef.close(this.videoTiers);
+    } else {
+      this.dialogRef.close(this.updatedVideoName);
+    }
   }
 }

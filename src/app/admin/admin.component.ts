@@ -89,7 +89,15 @@ export class AdminComponent implements OnInit {
     return result;
   }
 
-  modifyVideo(video: Video) {
+  modifyVideo(columnName: string, video: Video) {
+    if (columnName === 'docName') {
+      this.modifyName(video);
+    } else {
+      this.modifyTier(video);
+    }
+  }
+
+  private modifyTier(video: Video) {
     const id = video.id ?? 0;
     if (video.id !== undefined) {
       const dialogRef = this.dialog.open(ModifyVideoDialog, {
@@ -97,10 +105,31 @@ export class AdminComponent implements OnInit {
         width: '75%'
       });
       dialogRef.componentInstance.videoName = video.docName;
+      dialogRef.componentInstance.isUpdatingTier = true;
       
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.adminService.updateTiersOnVideo(id, result).subscribe(
+            () => this.getVideos(),
+            () => this.maintenanceFailure = true
+          );
+        }
+      });
+    }
+  }
+
+  private modifyName(video: Video) {
+    const id = video.id ?? 0;
+    if (video.id !== undefined) {
+      const dialogRef = this.dialog.open(ModifyVideoDialog, {
+        disableClose: true,
+        width: '75%'
+      });
+      dialogRef.componentInstance.isUpdatingTier = false;
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.adminService.updateVideoName(id, result).subscribe(
             () => this.getVideos(),
             () => this.maintenanceFailure = true
           );

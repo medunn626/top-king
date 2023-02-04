@@ -24,8 +24,9 @@
                 class="purchase-button"
                 (click)="purchasePlan(package.id)"
                 type="submit"
-                [value]="usersCurrentPlan === 0 ? 'Buy for $' + package.price : 
-                    determineSwitchPriceText(package.price)"/>
+                [value]="usersCurrentPlan === 0 ? '$' + package.price + '/month': 
+                    determineSwitchPriceText(package.price)"
+                />
             </p>
             <br/>
         </div>
