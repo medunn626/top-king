@@ -15,18 +15,52 @@
     <h1>Log In</h1>
     <label for="email">Email</label>
     <br/>
-    <input [(ngModel)]="user.email" id="emailLog" name="email" type="email" placeholder="e.g. name@gmail.com" required/>
+    <input 
+      [(ngModel)]="user.email"
+      id="emailLog"
+      name="email"
+      type="email"
+      placeholder="e.g. name@gmail.com"
+      required
+    />
     <br/>
     <br/>
     <label for="password">Password</label>
     <br/>
-    <input [(ngModel)]="user.password" id="passwordLog" name="password" type="password" placeholder="Password" required/>
+    <input 
+      [(ngModel)]="user.password"
+      id="passwordLog"
+      name="password"
+      type="password"
+      placeholder="Password"
+      required
+    />
     <br/>
     <div *ngIf="isNewUser">
       <br/>
       <label for="confirmPassword">Confirm Password</label>
       <br/>
-      <input [(ngModel)]="user.passwordConfirmation" id="passwordConfirmLog" name="confirmPassword" type="password" name="passwordConfirmation" placeholder="Confirm Passsword" required/>
+      <input 
+        [(ngModel)]="user.passwordConfirmation"
+        id="passwordConfirmLog"
+        name="confirmPassword"
+        type="password"
+        name="passwordConfirmation"
+        placeholder="Confirm Passsword"
+        required
+      />
+      <br/>
+      <br/>
+      <label for="clientName">Your Name</label>
+      <input
+        [(ngModel)]="user.name"
+        id="clientName"
+        name="clientName"
+        type="text"
+        placeholder="e.g. Martin"
+        size="30"
+        required
+      />
       <br/>
       <br/>
       <label for="phoneNumber">Phone Number (optional)</label>

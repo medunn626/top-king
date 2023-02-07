@@ -54,7 +54,7 @@ export class PackagesComponent implements OnInit {
           'This program will provide world renown introduction fitness exercises to help incorporate ' +
           'into your daily exercises including free weights & calisthenics!!'
         ],
-        price: 49.99,
+        price: 30,
         userHasThisPlan: this.usersCurrentPlan === 1
       },
       {
@@ -63,7 +63,7 @@ export class PackagesComponent implements OnInit {
         descriptions: [
           'This program includes muscle and strength training exercises to take basic training to next level with machines and much more!!'
         ],
-        price: 100,
+        price: 50,
         userHasThisPlan: this.usersCurrentPlan === 2
       },
       {
@@ -75,7 +75,7 @@ export class PackagesComponent implements OnInit {
           'Cutting program for people who want to get cut or lose weight!',
           'Also includes all of the above plans incorporating supersets, drop sets, different innovative exercises to hit the muscle from different angles and many more!!'
         ],
-        price: 150,
+        price: 75,
         userHasThisPlan: this.usersCurrentPlan === 3
       },
     ]

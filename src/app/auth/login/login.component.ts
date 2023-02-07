@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
       const userToSave: UserRequest = {
         email: this.user.email,
         password: this.user.password,
+        name: this.user.name,
         phoneNumber: this.getDeformattedPhoneNumber(),
         productTier: this.intendedPlanToPurchase
       }

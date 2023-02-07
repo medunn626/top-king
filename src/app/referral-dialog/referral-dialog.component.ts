@@ -18,12 +18,17 @@ export class ReferralDialogComponent {
     this.dialogRef.close(true);
   }
 
+  updatePaymentMethod(value) {
+    console.log(value);
+  }
+
   confirm() {
-    const clientName = this.data.clientName;
     const referralEmail = this.data.referralEmail;
+    const clientPaymentMethod = this.data.paymentMethod;
+    const clientPaymentHandle = this.data.paymentHandle;
     const userId = localStorage.getItem('userId') ?? '';
-    if (clientName && referralEmail && userId) {
-      this.referralDialogService.saveReferral(clientName, userId, referralEmail)
+    if (referralEmail && clientPaymentMethod && clientPaymentHandle && userId) {
+      this.referralDialogService.saveReferral(userId, clientPaymentMethod, clientPaymentHandle, referralEmail)
       .subscribe(
         () => this.dialogRef.close(true),
         () => this.dialogRef.close(false)

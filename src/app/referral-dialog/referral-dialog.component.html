@@ -3,21 +3,7 @@
         <div mat-dialog-content>
             <h3 class="header">Refer and receive commision!</h3>
         </div>
-        <br/>
         <form ngNativeValidate>
-            <label for="clientName">Your Name</label>
-            <br/>
-            <input 
-                [(ngModel)]="data.clientName"
-                id="clientName"
-                name="clientName"
-                type="text"
-                placeholder="e.g. Martin"
-                size="30"
-                required
-            />
-            <br/>
-            <br/>
             <label for="referralEmail">Referral Email</label>
             <br/>
             <input
@@ -26,6 +12,28 @@
                 name="referralEmail"
                 type="email"
                 placeholder="e.g. name@gmail.com" 
+                size="30"
+                required
+            />
+            <br/>
+            <br/>
+            <label for="paymentMethod">Payment method</label>
+            <br/>
+            <select [(ngModel)]="data.paymentMethod" name="paymentMethod">
+                <option value="Paypal">Paypal</option>
+                <option value="Venmo">Venmo</option>
+                <option value="Cashapp">Cashapp</option>
+            </select>
+            <br/>
+            <br/>
+            <label for="paymentHandle">Account Handle</label>
+            <br/>
+            <input
+                [(ngModel)]="data.paymentHandle"
+                id="paymentHandle"
+                name="paymentHandle"
+                type="text"
+                placeholder="e.g. @cashapp.handle" 
                 size="30"
                 required
             />

@@ -10,25 +10,23 @@
         <h4>Your Current Plan: {{ usersPackage.title }} </h4>
     </div>
     <br/>
-    <div *ngIf="usersPackage" id="wrapper">
-        <h4>Other Plans</h4>
-    </div>
-    <div *ngFor="let package of usersNonPackages" id="wrapper">
-        <div class="package-container">
-            <h3 class="package-title">{{ package.title }}</h3>
-            <ul *ngFor="let desc of package.descriptions">
-                <li>{{ desc }}</li>
-            </ul>
-            <p class="purchase button">
-                <input 
-                class="purchase-button"
-                (click)="purchasePlan(package.id)"
-                type="submit"
-                [value]="usersCurrentPlan === 0 ? '$' + package.price + '/month': 
-                    determineSwitchPriceText(package.price)"
-                />
-            </p>
-            <br/>
+    <div *ngIf="!usersPackage">
+        <div *ngFor="let package of usersNonPackages" id="wrapper">
+            <div class="package-container">
+                <h3 class="package-title">{{ package.title }}</h3>
+                <ul *ngFor="let desc of package.descriptions">
+                    <li>{{ desc }}</li>
+                </ul>
+                <p class="purchase button">
+                    <input 
+                        class="purchase-button"
+                        (click)="purchasePlan(package.id)"
+                        type="submit"
+                        [value]="'$' + package.price + '/month'"
+                    />
+                </p>
+                <br/>
+            </div>
         </div>
     </div>
     <div id="wrapper">
