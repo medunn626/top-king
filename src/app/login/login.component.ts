@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, UserRequest } from '../../auth/auth.service';
+import { LoginService, UserRequest } from '../login/login.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,9 +13,10 @@ export class LoginComponent implements OnInit {
   intendedPlanToPurchase: string;
   showLoginFirstMessage = false;
   passwordsMatch = true;
+  forgotPassword = false;
 
   constructor(
-    public auth: AuthService,
+    public auth: LoginService,
     public router: Router
   ) { }
 
@@ -28,17 +29,25 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    this.passwordsMatch = !this.isNewUser || (this.user.passwordConfirmation === this.user.password);
-    if (this.passwordsMatch) {
-      const userToSave: UserRequest = {
-        email: this.user.email,
-        password: this.user.password,
-        name: this.user.name,
-        phoneNumber: this.getDeformattedPhoneNumber(),
-        productTier: this.intendedPlanToPurchase
+    if (this.forgotPassword) {
+      this.auth.sendPasswordResetLink(this.user.email);
+    } else {
+      this.passwordsMatch = !this.isNewUser || (this.user.passwordConfirmation === this.user.password);
+      if (this.passwordsMatch) {
+        const userToSave: UserRequest = {
+          email: this.user.email,
+          password: this.user.password,
+          name: this.user.name,
+          phoneNumber: this.getDeformattedPhoneNumber(),
+          productTier: this.intendedPlanToPurchase
+        }
+        this.isNewUser ? this.auth.signUp(userToSave) : this.auth.login(userToSave);
       }
-      this.isNewUser ? this.auth.signUp(userToSave) : this.auth.login(userToSave);
     }
+  }
+
+  public toggleForgotPassword(): void {
+    this.forgotPassword = !this.forgotPassword;
   }
 
   public toggleIsNewUser(): void {

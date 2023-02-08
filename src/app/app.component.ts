@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AuthService } from './auth/auth.service';
+import { LoginService } from './login/login.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   referralError = false;
 
   constructor(
-    public auth: AuthService,
+    public auth: LoginService,
     public dialog: MatDialog
   ) {
     this.date = '' + new Date().getFullYear();

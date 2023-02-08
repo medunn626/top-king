@@ -13,6 +13,9 @@
       <h5>Please try again. The passwords entered do not match.</h5>
     </div>
     <h1>Log In</h1>
+    <div *ngIf="forgotPassword" class="failure">
+      <h5>Provide your email to receive a password reset code.</h5>
+    </div>
     <label for="email">Email</label>
     <br/>
     <input 
@@ -25,17 +28,22 @@
     />
     <br/>
     <br/>
-    <label for="password">Password</label>
-    <br/>
-    <input 
-      [(ngModel)]="user.password"
-      id="passwordLog"
-      name="password"
-      type="password"
-      placeholder="Password"
-      required
-    />
-    <br/>
+    <div *ngIf="!forgotPassword">
+      <label for="password">Password</label>
+      <br/>
+      <input 
+        [(ngModel)]="user.password"
+        id="passwordLog"
+        name="password"
+        type="password"
+        placeholder="Password"
+        required
+      />
+      <br/>
+    </div>
+    <div *ngIf="!isNewUser">
+      <a (click)="toggleForgotPassword()"><i> {{ forgotPassword ? 'Back to Login ' : 'Forgot Password?' }}</i></a>
+    </div>
     <div *ngIf="isNewUser">
       <br/>
       <label for="confirmPassword">Confirm Password</label>
@@ -78,12 +86,12 @@
         inputmode="numeric"
       />
     </div>
-    <div class="lower">
-      <a (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
-    </div><!--/ lower-->
+    <div *ngIf="!forgotPassword" class="lower">
+      <a class="special-link" (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
+    </div>
     <p class="login button">
-      <input (click)="login()" class="login-input" type="submit" value="Log in"/>
+      <input (click)="login()" class="login-input" type="submit" [value]="forgotPassword ? 'Send': 'Log in'"/>
     </p>
   </form>
-</div><!--/ wrapper-->
+</div>
 <br/>

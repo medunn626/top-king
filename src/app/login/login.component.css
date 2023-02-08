@@ -146,7 +146,7 @@ p.login.button {
 	);
 }
 
-#wrapper a {
+.special-link {
 	display: inline-block;
 	font-weight: bold;
 	background: rgb(247, 248, 241);
@@ -159,13 +159,13 @@ p.login.button {
 	transition: all 0.4s  linear;
 }
 
-#wrapper a:hover {
+.special-link:hover {
 	color: goldenrod;
 	background: rgb(247, 247, 247);
 	border: 1px solid rgb(203, 213, 214);
 }
 
-#wrapper a:active{
+.special-link:active{
 	position: relative;
 	top: 1px;
 }

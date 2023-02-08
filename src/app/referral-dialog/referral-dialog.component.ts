@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ReferralDialogService } from './referral-dialog.service';
+import { Referral, ReferralDialogService } from './referral-dialog.service';
 
 @Component({
   selector: 'app-referral-dialog',
@@ -24,11 +24,17 @@ export class ReferralDialogComponent {
 
   confirm() {
     const referralEmail = this.data.referralEmail;
-    const clientPaymentMethod = this.data.paymentMethod;
-    const clientPaymentHandle = this.data.paymentHandle;
-    const userId = localStorage.getItem('userId') ?? '';
-    if (referralEmail && clientPaymentMethod && clientPaymentHandle && userId) {
-      this.referralDialogService.saveReferral(userId, clientPaymentMethod, clientPaymentHandle, referralEmail)
+    const paymentMethod = this.data.paymentMethod;
+    const paymentHandle = this.data.paymentHandle;
+    const affiliateId = +(localStorage.getItem('userId') ?? '');
+    if (referralEmail && paymentMethod && paymentHandle && affiliateId) {
+      const referralRequest: Referral = {
+        referralEmail,
+        paymentMethod,
+        paymentHandle,
+        affiliateId
+      }
+      this.referralDialogService.saveReferral(referralRequest)
       .subscribe(
         () => this.dialogRef.close(true),
         () => this.dialogRef.close(false)

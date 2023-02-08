@@ -19,13 +19,11 @@ export interface UserRequest {
 }
 
 @Injectable()
-export class AuthService {
+export class LoginService {
   loggedIn = false;
   loginFailure = false;
   signUpFailure = false;
   signOutFailure = false;
-  changePasswordSuccess = false;
-  changePasswordFailure = false;
   isAdmin = false;
 
   constructor(
@@ -86,6 +84,19 @@ export class AuthService {
       }
     )
   }
+
+  sendPasswordResetLink(email: string) {
+    this.http.post<void>(`${environment.apiServer}/password-reset`, email)
+    .subscribe(
+      () => {
+        localStorage.setItem('crossCheckEmail', email);
+        this.router.navigate(['/change-password/']);
+      },
+      () => {
+        this.signUpFailure = false;
+        this.loginFailure = true;
+      });
+    }
 
   signOut() {
     localStorage.clear();
