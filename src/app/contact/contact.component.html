@@ -1,19 +1,22 @@
+<div *ngIf="sendInquiryFailure" class="failure">
+    <h4>There was a problem sending the inquiry. Please try again.</h4>
+</div>
 <div id="wrapper">
-    <form (ngSubmit)="sendEmail(data)" ngNativeValidate>
+    <form (ngSubmit)="sendInquiry()" ngNativeValidate>
         <h1>Ask The King</h1>
         <label for="name">Name</label>
         <br/>
-        <input [(ngModel)]="data.name" type="text" name="name" placeholder="e.g. Martin" size="40" required/>
+        <input [(ngModel)]="data.name" id="nameField" type="text" name="name" placeholder="e.g. Martin" size="40" required/>
         <br/>
         <br/>
         <label for="email">Email</label>
         <br/>
-        <input [(ngModel)]="data.email" type="email" name="email" placeholder="e.g. name@gmail.com" size="40" required/>
+        <input [(ngModel)]="data.email" id="emailField" type="email" name="email" placeholder="e.g. name@gmail.com" size="40" required/>
         <br/>
         <br/>
         <label for="message">What can I answer for you?</label>
         <br/>
-        <textarea [(ngModel)]="data.message" name="message" cols="40" rows="10" placeholder="Insert message here" required></textarea> 
+        <textarea [(ngModel)]="data.message" id="messageField"name="message" cols="40" rows="10" placeholder="Insert message here" required></textarea> 
         <p class="submit button">
             <input type="submit" value="Submit"/>
         </p>

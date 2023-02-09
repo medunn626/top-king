@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Contact, ContactService } from './contact.service';
 
 @Component({
   selector: 'app-contact',
@@ -6,49 +7,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  data = <any>{};
+  data = <Contact>{};
+  sendInquiryFailure = false;
 
-  sendEmail(data) {
-    const mapForm = document.createElement("form");
-    mapForm.method = "POST";
-    mapForm.action = "https://formsubmit.co/medunn626@yahoo.com";
+  constructor(
+    private readonly contactService: ContactService
+  ) { }
 
-    // Name:
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.name = "name";
-    nameInput.value = data.name;
-    mapForm.appendChild(nameInput);
-    
-    // Email:
-    const emailInput = document.createElement("input");
-    emailInput.type = "email";
-    emailInput.name = "email";
-    emailInput.value = data.email;
-    mapForm.appendChild(emailInput);
-
-    // Text:
-    const messageInput = document.createElement("textarea");
-    messageInput.name = "message";
-    messageInput.value = data.message;
-    mapForm.appendChild(messageInput);
-
-    // Subject:
-    const subjectInput = document.createElement("input");
-    subjectInput.type = "hidden";
-    subjectInput.name = "_subject";
-    subjectInput.value = "New Client Email!"
-    mapForm.appendChild(subjectInput);
-
-    // Next:
-    const nextInput = document.createElement("input");
-    nextInput.type = "hidden";
-    nextInput.name = "_next";
-    nextInput.value = "https://medunn626.github.io/top-king/"
-    mapForm.appendChild(nextInput);
-
-    document.body.appendChild(mapForm);
-
-    mapForm.submit();
+  sendInquiry(): void {
+    if (this.data.name && this.data.email && this.data.message) {
+      this.contactService.sendInquiry(this.data)
+      .subscribe(
+        () => {
+          const nameField = <HTMLInputElement>document.getElementById('nameField');
+          const emailField = <HTMLInputElement>document.getElementById('emailField');
+          const messageField = <HTMLInputElement>document.getElementById('messageField');
+          nameField.value = '';
+          emailField.value = '';
+          messageField.value = '';
+        },
+        () => this.sendInquiryFailure = true)
+    }
   }
 }

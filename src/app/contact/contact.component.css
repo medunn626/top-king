@@ -105,3 +105,8 @@ p.submit.button{
 	text-align: right;
 	margin: 5px 0;
 }
+
+.failure {
+	text-align: center;
+	color: red;
+}

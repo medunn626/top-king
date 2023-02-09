@@ -163,11 +163,16 @@ p.login.button {
 	color: goldenrod;
 	background: rgb(247, 247, 247);
 	border: 1px solid rgb(203, 213, 214);
+	cursor: grab;
 }
 
 .special-link:active{
 	position: relative;
 	top: 1px;
+}
+
+.forgot-link:hover {
+	cursor: grab;
 }
 
 i {

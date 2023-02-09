@@ -1,8 +1,8 @@
 <div *ngIf="addFailure" class="failure">
-    <h5>There was a problem saving the video. Please try again.</h5>
+    <h4>There was a problem saving the video. Please try again.</h4>
 </div>
 <div *ngIf="getFailure" class="failure">
-    <h5>There was a problem retrieving the videos.</h5>
+    <h4>There was a problem retrieving the videos.</h4>
 </div>
 <div id="wrapper">
     <form (ngSubmit)="uploadVideo()" ngNativeValidate>
