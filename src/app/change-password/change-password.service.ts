@@ -20,10 +20,9 @@ export interface UserRequest {
 
 @Injectable()
 export class ChangePasswordService {
-  changePasswordSuccess = false;
   changePasswordFailure = false;
+  incorrectCode = false;
   codeConfirmed = false;
-  checkComplete = false;
 
   constructor(
     public router: Router,
@@ -35,14 +34,23 @@ export class ChangePasswordService {
     this.http.get<number>(`${environment.apiServer}/confirm-code/${code}`, {params})
     .subscribe(
       (userId) => {
-        this.codeConfirmed = !!userId;
+
         if (userId) {
           localStorage.setItem('userId', '' + userId);
+          this.codeConfirmed = true;
           this.changePasswordFailure = false;
-          this.checkComplete = true;
+          this.incorrectCode = false;
+        } else {
+          this.incorrectCode = true;
+          this.codeConfirmed = false;
+          this.changePasswordFailure = false;
         }
       },
-      () => this.changePasswordFailure = true
+      () => {
+        this.changePasswordFailure = true;
+        this.incorrectCode = false;
+        this.codeConfirmed = false;
+      }
     );
   }
 
@@ -52,10 +60,10 @@ export class ChangePasswordService {
 
     this.http.put<UserResponse>(`${environment.apiServer}/change-password`, userToSave)
     .subscribe(
-      (response) => {
-        localStorage.setItem('userId', '' + response.id);
-        localStorage.setItem('productTier', response.productTier);
-        localStorage.setItem('phoneNumber', response.phoneNumber ?? '');
+      (savedUser) => {
+        localStorage.setItem('userId', '' + savedUser.id);
+        localStorage.setItem('productTier', savedUser.productTier);
+        localStorage.setItem('phoneNumber', savedUser.phoneNumber ?? '');
         this.changePasswordFailure = false;
         this.router.navigate(['/content/']);
       }, 

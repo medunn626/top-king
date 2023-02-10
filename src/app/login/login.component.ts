@@ -54,6 +54,11 @@ export class LoginComponent implements OnInit {
     this.isNewUser = !this.isNewUser;
   }
 
+  public confirmCode(): void {
+    const code = this.user.code;
+    this.auth.confirmEmail(code);
+  }
+
   private getDeformattedPhoneNumber(): string {
     if (this.user.phoneNumber) {
       const formattedPhoneNumber = this.user.phoneNumber;

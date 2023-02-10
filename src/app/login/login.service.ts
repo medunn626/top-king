@@ -20,10 +20,12 @@ export interface UserRequest {
 
 @Injectable()
 export class LoginService {
-  loggedIn = false;
+  loggedInAndConfirmed = false;
+  loggedInAndUnConfirmed = false;
   loginFailure = false;
   signUpFailure = false;
   signOutFailure = false;
+  incorrectCode = false;
   isAdmin = false;
 
   constructor(
@@ -38,14 +40,18 @@ export class LoginService {
       .append('productTier', userToSave.productTier ?? '');
     this.http.get<UserResponse>(`${environment.apiServer}/login`, {params})
     .subscribe(
-      (response) => {
-        localStorage.setItem('userId', '' + response.id);
-        localStorage.setItem('productTier', response.productTier);
-        localStorage.setItem('phoneNumber', response.phoneNumber ?? '');
-        this.loginFailure = false;
-        this.signUpFailure = false;
-        this.setStatus();
-        this.determineLoginNavigation(userToSave.productTier ?? '');
+      (existingUser) => {
+        if (existingUser.id) {
+          localStorage.setItem('userId', '' + existingUser.id);
+          localStorage.setItem('productTier', existingUser.productTier);
+          localStorage.setItem('phoneNumber', existingUser.phoneNumber ?? '');
+          this.loginFailure = false;
+          this.signUpFailure = false;
+          this.setStatus();
+          this.determineLoginNavigation(userToSave.productTier ?? '');
+        } else {
+          this.loggedInAndUnConfirmed = true;
+        }
       },
       () => {
         this.loginFailure = true;
@@ -58,23 +64,19 @@ export class LoginService {
   }
 
   signUp(userToCreate: UserRequest) {
-    const emailField = <HTMLInputElement>document.getElementById('emailLog');
-    const passwordField = <HTMLInputElement>document.getElementById('passwordLog');
-    const passwordConfirmField = <HTMLInputElement>document.getElementById('passwordConfirmLog');
-    const phoneNumberField = <HTMLInputElement>document.getElementById('phoneNumberLog');
-
     this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, userToCreate)
     .subscribe(
-      (response) => {
-        localStorage.setItem('userId', '' + response.id);
-        localStorage.setItem('productTier', response.productTier);
-        localStorage.setItem('phoneNumber', response.phoneNumber ?? '');
+      (createdUser) => {
+        this.loggedInAndUnConfirmed = true;
         this.loginFailure = false;
         this.signUpFailure = false;
-        this.setStatus();
-        this.determineLoginNavigation(userToCreate.productTier ?? '');
+        localStorage.setItem('unconfirmedUserId', '' + createdUser.id);
       }, 
       () => {
+        const emailField = <HTMLInputElement>document.getElementById('emailLog');
+        const passwordField = <HTMLInputElement>document.getElementById('passwordLog');
+        const passwordConfirmField = <HTMLInputElement>document.getElementById('passwordConfirmLog');
+        const phoneNumberField = <HTMLInputElement>document.getElementById('phoneNumberLog');
         this.signUpFailure = true;
         this.loginFailure = false;
         emailField.value = '';
@@ -83,6 +85,36 @@ export class LoginService {
         phoneNumberField.value = '';
       }
     )
+  }
+
+  confirmEmail(code: string) {
+    const id = localStorage.getItem('unconfirmedUserId') ?? '';
+    if (id) {
+      this.http.get<UserResponse>(`${environment.apiServer}/confirm-code/user/${id}/code/${code}`, {})
+      .subscribe(
+        (savedUser) => {
+          if (savedUser.id) {
+            localStorage.setItem('userId', '' + savedUser.id);
+            localStorage.setItem('productTier', savedUser.productTier);
+            localStorage.setItem('phoneNumber', savedUser.phoneNumber ?? '');
+            localStorage.removeItem('unconfirmedUserId');
+            this.loggedInAndUnConfirmed = false;
+            this.incorrectCode = false;
+            this.setStatus();
+            this.determineLoginNavigation(savedUser.productTier ?? '');
+          } else {
+            this.incorrectCode = true;
+          }
+        },
+        () => {
+          this.signUpFailure = true;
+          this.loginFailure = false;
+          this.incorrectCode = false;
+          const codeField = <HTMLInputElement>document.getElementById('codeLog');
+          codeField.value = '';
+        }
+      );
+    }
   }
 
   sendPasswordResetLink(email: string) {
@@ -105,8 +137,8 @@ export class LoginService {
   }
 
   setStatus(): void {
-    this.loggedIn = !!localStorage.getItem('userId');
-    this.isAdmin = this.loggedIn && localStorage.getItem('productTier') === 'admin';
+    this.loggedInAndConfirmed = !this.loggedInAndUnConfirmed && !!localStorage.getItem('userId');
+    this.isAdmin = this.loggedInAndConfirmed && localStorage.getItem('productTier') === 'admin';
   }
 
   determineLoginNavigation(intendedPlanToPurchase: string): void {

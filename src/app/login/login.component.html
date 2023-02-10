@@ -9,6 +9,9 @@
     <div *ngIf="auth.signUpFailure" class="failure">
       <h4>Please try again. This username already exists or you have entered the fields incorrectly.</h4>
     </div>
+    <div *ngIf="auth.incorrectCode && !auth.signUpFailure && !auth.loginFailure" class="failure">
+      <h4>The code entered is incorrect. Please try again.</h4>
+    </div>
     <div *ngIf="!passwordsMatch" class="failure">
       <h4>Please try again. The passwords entered do not match.</h4>
     </div>
@@ -16,82 +19,100 @@
     <div *ngIf="forgotPassword" class="failure">
       <h4>Provide your email to receive a password reset code.</h4>
     </div>
-    <label for="email">Email</label>
-    <br/>
-    <input 
-      [(ngModel)]="user.email"
-      id="emailLog"
-      name="email"
-      type="email"
-      placeholder="e.g. name@gmail.com"
-      required
-    />
-    <br/>
-    <br/>
-    <div *ngIf="!forgotPassword">
-      <label for="password">Password</label>
+    <div *ngIf="!auth.loggedInAndUnConfirmed">
+      <label for="email">Email</label>
       <br/>
       <input 
-        [(ngModel)]="user.password"
-        id="passwordLog"
-        name="password"
-        type="password"
-        placeholder="Password"
-        required
-      />
-      <br/>
-    </div>
-    <div *ngIf="!isNewUser">
-      <a class="forgot-link" (click)="toggleForgotPassword()"><i> {{ forgotPassword ? 'Back to Login ' : 'Forgot Password?' }}</i></a>
-    </div>
-    <div *ngIf="isNewUser">
-      <br/>
-      <label for="confirmPassword">Confirm Password</label>
-      <br/>
-      <input 
-        [(ngModel)]="user.passwordConfirmation"
-        id="passwordConfirmLog"
-        name="confirmPassword"
-        type="password"
-        name="passwordConfirmation"
-        placeholder="Confirm Passsword"
+        [(ngModel)]="user.email"
+        id="emailLog"
+        name="email"
+        type="email"
+        placeholder="e.g. name@gmail.com"
         required
       />
       <br/>
       <br/>
-      <label for="clientName">Your Name</label>
-      <input
-        [(ngModel)]="user.name"
-        id="clientName"
-        name="clientName"
+      <div *ngIf="!forgotPassword">
+        <label for="password">Password</label>
+        <br/>
+        <input 
+          [(ngModel)]="user.password"
+          id="passwordLog"
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+        />
+        <br/>
+      </div>
+      <div *ngIf="!isNewUser">
+        <a class="forgot-link" (click)="toggleForgotPassword()"><i> {{ forgotPassword ? 'Back to Login ' : 'Forgot Password?' }}</i></a>
+      </div>
+      <div *ngIf="isNewUser">
+        <br/>
+        <label for="confirmPassword">Confirm Password</label>
+        <br/>
+        <input 
+          [(ngModel)]="user.passwordConfirmation"
+          id="passwordConfirmLog"
+          name="confirmPassword"
+          type="password"
+          name="passwordConfirmation"
+          placeholder="Confirm Passsword"
+          required
+        />
+        <br/>
+        <br/>
+        <label for="clientName">Your Name</label>
+        <input
+          [(ngModel)]="user.name"
+          id="clientName"
+          name="clientName"
+          type="text"
+          placeholder="e.g. Martin"
+          size="30"
+          required
+        />
+        <br/>
+        <br/>
+        <label for="phoneNumber">Phone Number (optional)</label>
+        <br/>
+        <i>Used for new video notifications and consulting calls only.<br/>Message and data rates apply.</i>
+        <br/>
+        <input
+          [(ngModel)]="user.phoneNumber"
+          appPhoneMask
+          id="phoneNumberLog"
+          name="phoneNumber"
+          type="phone"
+          placeholder="(000)-000-0000"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+      </div>
+      <p class="login button">
+        <input (click)="login()" class="login-input" type="submit" [value]="forgotPassword ? 'Send': 'Log in'"/>
+      </p>
+      <div *ngIf="!forgotPassword" class="lower">
+        <a class="special-link" (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
+      </div>
+    </div>  
+    <div *ngIf="auth.loggedInAndUnConfirmed">
+      <label for="code">Enter the code you received in your email</label>
+      <br/>
+      <input 
+        [(ngModel)]="user.code"
+        id="codeLog"
+        name="code"
         type="text"
-        placeholder="e.g. Martin"
-        size="30"
         required
       />
       <br/>
       <br/>
-      <label for="phoneNumber">Phone Number (optional)</label>
-      <br/>
-      <i>Used for new video notifications and consulting calls only.<br/>Message and data rates apply.</i>
-      <br/>
-      <input
-        [(ngModel)]="user.phoneNumber"
-        appPhoneMask
-        id="phoneNumberLog"
-        name="phoneNumber"
-        type="phone"
-        placeholder="(000)-000-0000"
-        pattern="[0-9]*"
-        inputmode="numeric"
-      />
+      <p class="login button">
+        <input (click)="confirmCode()" class="login-input" type="submit" value="Submit"/>
+      </p>
     </div>
-    <div *ngIf="!forgotPassword" class="lower">
-      <a class="special-link" (click)="toggleIsNewUser()">{{ isNewUser ? 'Already a member? Sign In!' : 'Not a member yet? Register!' }}</a>
-    </div>
-    <p class="login button">
-      <input (click)="login()" class="login-input" type="submit" [value]="forgotPassword ? 'Send': 'Log in'"/>
-    </p>
   </form>
 </div>
 <br/>
