@@ -34,12 +34,14 @@ export class ChangePasswordComponent implements OnInit {
   private confirmCode(): void {
     const crossCheckEmail: string  = localStorage.getItem('crossCheckEmail') ?? '';
     const code: string = this.user.code;
-    this.service.confirmCode(code, crossCheckEmail);
+    if (code) {
+      this.service.confirmCode(code, crossCheckEmail);
+    }
   }
 
   private changePassword(): void {
     this.passwordsMatch = this.user.passwordConfirmation === this.user.password;
-    if (this.passwordsMatch) {
+    if (this.user.password && this.passwordsMatch) {
       const userToSave: UserRequest = {
         id: +(localStorage.getItem('userId') ?? ''),
         email: this.user.email,

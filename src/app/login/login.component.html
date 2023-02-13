@@ -35,11 +35,15 @@
       <div *ngIf="!forgotPassword">
         <label for="password">Password</label>
         <br/>
+        <i>Password should be 8-16 characters</i>
+        <br/>
         <input 
           [(ngModel)]="user.password"
           id="passwordLog"
           name="password"
           type="password"
+          minLength="8"
+          maxlength="16"
           placeholder="Password"
           required
         />
@@ -58,6 +62,8 @@
           name="confirmPassword"
           type="password"
           name="passwordConfirmation"
+          minLength="8"
+          maxLength="16"
           placeholder="Confirm Passsword"
           required
         />

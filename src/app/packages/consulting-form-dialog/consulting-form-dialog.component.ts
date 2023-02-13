@@ -24,8 +24,10 @@ export class ConsultingFormDialog {
     } else {
       phoneNumber = this.data.phoneNumber;
     }
-    const deformattedNumber = this.getDeformattedPhoneNumber(phoneNumber);
-    this.dialogRef.close(deformattedNumber);
+    if (phoneNumber) {
+      const deformattedNumber = this.getDeformattedPhoneNumber(phoneNumber);
+      this.dialogRef.close(deformattedNumber);
+    }
   }
 
   private getDeformattedPhoneNumber(formattedPhoneNumber: string): string {

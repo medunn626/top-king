@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router'
 import { ChangePasswordComponent } from './change-password.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChangePasswordService } from './change-password.service';
+import { LoginService } from '../login/login.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ChangePasswordService } from './change-password.service';
   declarations: [
     ChangePasswordComponent
   ],
-  providers: [ChangePasswordService]
+  providers: [ChangePasswordService, LoginService]
 })
 export class ChangePasswordModule { }

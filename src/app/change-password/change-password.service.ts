@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { LoginService } from '../login/login.service';
 
 export interface UserResponse {
   id?: number;
@@ -26,7 +27,8 @@ export class ChangePasswordService {
 
   constructor(
     public router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private readonly loginService: LoginService
   ) { }
 
   confirmCode(code: string, email: string) {
@@ -34,7 +36,6 @@ export class ChangePasswordService {
     this.http.get<number>(`${environment.apiServer}/confirm-code/${code}`, {params})
     .subscribe(
       (userId) => {
-
         if (userId) {
           localStorage.setItem('userId', '' + userId);
           this.codeConfirmed = true;
@@ -65,6 +66,7 @@ export class ChangePasswordService {
         localStorage.setItem('productTier', savedUser.productTier);
         localStorage.setItem('phoneNumber', savedUser.phoneNumber ?? '');
         this.changePasswordFailure = false;
+        this.loginService.loggedInAndConfirmed = true;
         this.router.navigate(['/content/']);
       }, 
       () => {

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.auth.sendPasswordResetLink(this.user.email);
     } else {
       this.passwordsMatch = !this.isNewUser || (this.user.passwordConfirmation === this.user.password);
-      if (this.passwordsMatch) {
+      if (this.meetsFormValidation() && this.passwordsMatch) {
         const userToSave: UserRequest = {
           email: this.user.email,
           password: this.user.password,
@@ -46,6 +46,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  private meetsFormValidation(): boolean {
+    const hasName = !this.isNewUser || !!this.user.name;
+    const hasEmail = !!this.user.email;
+    const hasPassword = !!this.user.password;
+    const passwordLength = this.user.password?.length > 7 && this.user.password?.length < 17;
+    return hasName && hasEmail && hasPassword && passwordLength;
+  }
+
   public toggleForgotPassword(): void {
     this.forgotPassword = !this.forgotPassword;
   }
@@ -56,7 +64,9 @@ export class LoginComponent implements OnInit {
 
   public confirmCode(): void {
     const code = this.user.code;
-    this.auth.confirmEmail(code);
+    if (code) {
+      this.auth.confirmEmail(code);
+    }
   }
 
   private getDeformattedPhoneNumber(): string {
