@@ -4,7 +4,10 @@
             <h3 class="header">Refer and receive commision!</h3>
         </div>
         <form ngNativeValidate>
-            <label for="referralEmail">Referral Email</label>
+            <i>Joining the affiliate program you will earn 20% commission on each package that you sell!</i>
+            <br/>
+            <br/>
+            <label for="referralEmail">Email of Person You're Referring</label>
             <br/>
             <input
                 [(ngModel)]="data.referralEmail"
@@ -17,7 +20,7 @@
             />
             <br/>
             <br/>
-            <label for="paymentMethod">Payment method</label>
+            <label for="paymentMethod">Your Payment Method & Handle</label>
             <br/>
             <select [(ngModel)]="data.paymentMethod" name="paymentMethod">
                 <option value="Paypal">Paypal</option>
@@ -25,8 +28,6 @@
                 <option value="Cashapp">Cashapp</option>
             </select>
             <br/>
-            <br/>
-            <label for="paymentHandle">Account Handle</label>
             <br/>
             <input
                 [(ngModel)]="data.paymentHandle"
@@ -37,9 +38,6 @@
                 size="30"
                 required
             />
-            <br/>
-            <br/>
-            <i>Your referral needs to create an account before you receive commision.</i>
             <div class="dialog-buttons" mat-dialog-actions>
                 <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
                 <button class="action-button" mat-button (click)="confirm()">Confirm</button>

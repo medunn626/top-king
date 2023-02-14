@@ -23,13 +23,13 @@ export class ReferralDialogComponent {
   }
 
   confirm() {
-    const referralEmail = this.data.referralEmail;
+    const email = this.data.referralEmail;
     const paymentMethod = this.data.paymentMethod;
     const paymentHandle = this.data.paymentHandle;
     const affiliateId = +(localStorage.getItem('userId') ?? '');
-    if (referralEmail && paymentMethod && paymentHandle && affiliateId) {
+    if (email && paymentMethod && paymentHandle && affiliateId) {
       const referralRequest: Referral = {
-        referralEmail,
+        email,
         paymentMethod,
         paymentHandle,
         affiliateId

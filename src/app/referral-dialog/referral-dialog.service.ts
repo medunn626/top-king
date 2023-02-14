@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 export interface Referral {
-  referralEmail: string;
+  email: string;
   paymentMethod: string;
   paymentHandle: string;
   affiliateId: number
