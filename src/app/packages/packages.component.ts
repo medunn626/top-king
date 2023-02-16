@@ -51,7 +51,7 @@ export class PackagesComponent implements OnInit {
     this.usersCurrentPlan = +(localStorage.getItem('productTier') ?? 0);
     this.populatePackages();
     this.userHasAPackage = !!this.packages.find(p => p.userHasThisPlan);
-    this.usersNonPackages = this.packages.filter(p => !p.userHasThisPlan);
+    this.usersNonPackages = this.userHasAPackage ? [] : this.packages.filter(p => !p.userHasThisPlan);
   }
 
   private populatePackages(): void {

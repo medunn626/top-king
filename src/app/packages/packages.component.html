@@ -2,15 +2,18 @@
     <div *ngIf="updatePlanFailed" class="failure">
         <h4>There was a problem finalizing your purhcase. Please contact us for assistance.</h4>
     </div>
-    <div *ngIf="!userHasAPackage" id="wrapper">
+    <div *ngIf="!userHasAPackage && smallerScreen" id="wrapper">
         <h1>Plans</h1>
     </div>
+    <div *ngIf="!userHasAPackage && !smallerScreen" id="wrapper">
+        <h1>Plans & Consulting</h1>
+    </div>
     <br/>
-    <div *ngIf="!userHasAPackage" [id]="!smallerScreen? 'wrapper' : ''">
+    <div [id]="!smallerScreen? 'wrapper' : ''">
         <div *ngFor="let package of usersNonPackages"
             id="wrapper"
             [ngClass]="{'additional-margin' : !smallerScreen}"
-        >
+            >
             <div class="package-container">
                 <img class="package-title"
                     (click)="purchasePlan(package.id)"
@@ -34,31 +37,62 @@
                 <br/>
             </div>
         </div>
-    </div>
-    <div id="wrapper">
-        <h1>Consulting</h1>
-    </div>
-    <br/>
-    <div id="wrapper">
-        <div class="package-container">
-            <img class="consulting-title"
-                (click)="triggerConfirmCallDialog()"
-                [src]="consultingImgSrc"
-                width="180"
-                height="180"/>
-            <div class="image-hover"></div>
-            <ul>
-                <li>Personal 30-min face-to-face or voice call</li>
-                <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>
-            </ul>
-            <p class="purchase button">
-                <input 
-                class="purchase-button"
-                (click)="triggerConfirmCallDialog()"
-                type="submit"
-                value="Book for $100"/>
-            </p>
+        <div *ngIf="!smallerScreen">
+            <div *ngIf="userHasAPackage" id="wrapper">
+                <h1>Consulting</h1>
+            </div>
             <br/>
+            <br/>
+            <div id="wrapper">
+                <div class="package-container">
+                    <img class="consulting-title large-consulting-title"
+                        (click)="triggerConfirmCallDialog()"
+                        [src]="consultingImgSrc"
+                        width="180"
+                        height="180"/>
+                    <div class="image-hover"></div>
+                    <ul>
+                        <li>Personal 30-min face-to-face or voice call</li>
+                        <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>
+                    </ul>
+                    <p class="purchase button">
+                        <input 
+                        class="purchase-button"
+                        (click)="triggerConfirmCallDialog()"
+                        type="submit"
+                        value="Book for $100"/>
+                    </p>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="smallerScreen">
+        <div id="wrapper">
+            <h1>Consulting</h1>
+        </div>
+        <br/>
+        <div id="wrapper">
+            <div class="package-container">
+                <img class="consulting-title"
+                    (click)="triggerConfirmCallDialog()"
+                    [src]="consultingImgSrc"
+                    width="180"
+                    height="180"/>
+                <div class="image-hover"></div>
+                <ul>
+                    <li>Personal 30-min face-to-face or voice call</li>
+                    <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>
+                </ul>
+                <p class="purchase button">
+                    <input 
+                    class="purchase-button"
+                    (click)="triggerConfirmCallDialog()"
+                    type="submit"
+                    value="Book for $100"/>
+                </p>
+                <br/>
+            </div>
         </div>
     </div>
 </div>

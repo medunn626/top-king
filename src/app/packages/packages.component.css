@@ -163,6 +163,11 @@ h3 {
     margin-left: 50px;
   }
 
+  .large-consulting-title {
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+
   .package-container {
     width: 300px;
   }
