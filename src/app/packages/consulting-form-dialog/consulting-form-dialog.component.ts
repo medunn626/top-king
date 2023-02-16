@@ -8,29 +8,25 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ConsultingFormDialog {
   constructor(public dialogRef: MatDialogRef<ConsultingFormDialog>) {
-    this.hasProvidedPhoneNumber = !!localStorage.getItem('phoneNumber');
+    this.hasProvidedEmail = !!localStorage.getItem('clientEmail');
   }
   data = <any>{};
-  hasProvidedPhoneNumber: boolean;
+  hasProvidedEmail: boolean;
 
   cancel() {
     this.dialogRef.close(false);
   }
 
   confirm() {
-    let phoneNumber: string;
-    if (this.hasProvidedPhoneNumber) {
-      phoneNumber = localStorage.getItem('phoneNumber') ?? '';
+    let email: string;
+    if (this.hasProvidedEmail) {
+      email = localStorage.getItem('clientEmail') ?? '';
     } else {
-      phoneNumber = this.data.phoneNumber;
+      email = this.data.email;
     }
-    if (phoneNumber) {
-      const deformattedNumber = this.getDeformattedPhoneNumber(phoneNumber);
-      this.dialogRef.close(deformattedNumber);
+    if (email) {
+      this.dialogRef.close(email);
     }
   }
 
-  private getDeformattedPhoneNumber(formattedPhoneNumber: string): string {
-    return formattedPhoneNumber.replace(/[() -]/g, '');
-  }
 }

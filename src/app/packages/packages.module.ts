@@ -6,7 +6,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PackagesComponent } from './packages.component';
 import { PackagesService } from './packages.service';
 import { ConsultingFormDialog } from './consulting-form-dialog/consulting-form-dialog.component';
-import { PhoneMaskDirective } from './consulting-form-dialog/phone-mask.directive';
 
 @NgModule({
   imports: [
@@ -17,8 +16,7 @@ import { PhoneMaskDirective } from './consulting-form-dialog/phone-mask.directiv
   ],
   declarations: [
     ConsultingFormDialog,
-    PackagesComponent,
-    PhoneMaskDirective
+    PackagesComponent
   ],
   providers: [PackagesService]
 })

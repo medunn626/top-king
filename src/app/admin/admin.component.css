@@ -110,3 +110,7 @@ p.submit.button{
 	text-align: center;
 	color: red;
 }
+
+a:hover {
+	cursor: grab;
+}

@@ -114,6 +114,7 @@ export class PackagesComponent implements OnInit {
         this.packagesService.setPlan(planNumber + '')
         .subscribe(
           (response) => {
+            this.updatePlanFailed = false;
             localStorage.setItem('productTier', response.productTier ?? '');
             this.setOrUpdatePlans();
             this.router.navigate(['/content']);
@@ -129,11 +130,11 @@ export class PackagesComponent implements OnInit {
       disableClose: true,
       width: '75%'
     });
-    dialogRef.afterClosed().subscribe(phoneNumber => {
-      if (phoneNumber) {
-        this.packagesService.setupConsultingCall(phoneNumber)
+    dialogRef.afterClosed().subscribe(email => {
+      if (email) {
+        this.packagesService.setupConsultingCall(email)
         .subscribe(
-          () => EMPTY,
+          () => this.updatePlanFailed = false,
           () => this.updatePlanFailed = true
         );
       }

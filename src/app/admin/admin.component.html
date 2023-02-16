@@ -27,18 +27,9 @@
         </mat-radio-group>
         <br/>
         <br/>
-        <label>Send notification?</label>
-        <br/>
-        <mat-radio-group (change)="updateNotificationMethods($event.value)">
-            <mat-radio-button value="E">Email</mat-radio-button>
-            <br/>
-            <mat-radio-button value="T">Text</mat-radio-button>
-            <br/>
-            <mat-radio-button value="B">Both</mat-radio-button>
-            <br/>
-            <mat-radio-button value="N">None</mat-radio-button>
-            <br/>
-        </mat-radio-group>
+        <mat-checkbox (change)="updateNotificationMethods($event.checked)">
+            Send Email Notification?
+        </mat-checkbox>
         <p class="submit button">
             <input type="submit" value="Upload"/>
         </p>

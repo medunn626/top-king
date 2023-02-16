@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UserResponse } from '../login/login.service';
 import { Observable } from 'rxjs';
@@ -18,8 +18,8 @@ export class PackagesService {
     return this.http.put<UserResponse>(`${environment.apiServer}/plans/user/${userId}/plan/${productTier}`, {});
   }
 
-  setupConsultingCall(phoneNumber: string) {
-    return this.http.post<void>(`${environment.apiServer}/consultation/${phoneNumber}`, {});
+  setupConsultingCall(email: string) {
+    return this.http.post<void>(`${environment.apiServer}/consultation`, email);
   }
 
 }

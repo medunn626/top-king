@@ -3,23 +3,18 @@
         <div mat-dialog-content>
             <h4>Book Consultation</h4>
         </div>
-        <label>You will receive a text message with instructions on how to book.</label>
+        <label>You will receive a message with instructions on how to book.</label>
         <br/>
-        <div *ngIf="!hasProvidedPhoneNumber">
-            <label for="phoneNumber">Phone Number</label>
-            <br/>
-            <i>Used for new video notifications and consulting calls only. Message and data rates apply.</i>
-            <br/>
+        <div *ngIf="!hasProvidedEmail">
+            <label for="consultingEmail">Email Address</label>
             <br/>
             <input
-                [(ngModel)]="data.phoneNumber"
+                [(ngModel)]="data.email"
                 appPhoneMask
-                id="phoneNumberLog"
-                name="phoneNumber"
-                type="phone"
-                placeholder="e.g. (000)-000-0000" 
-                pattern="[0-9]*"
-                inputmode="numeric"
+                id="emailConsulting"
+                name="consultingEmail"
+                type="email"
+                placeholder="e.g. name@gmail.com"
                 required
             />
         </div>

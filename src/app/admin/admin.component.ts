@@ -54,8 +54,8 @@ export class AdminComponent implements OnInit {
     this.videoTiers = stringValue;
   }
 
-  updateNotificationMethods(stringValue: string) {
-    this.notificationMethod = stringValue;
+  updateNotificationMethods(sendEmail: boolean) {
+    this.notificationMethod = sendEmail ? 'E'  : 'N';
   }
 
   uploadVideo() {
@@ -68,7 +68,10 @@ export class AdminComponent implements OnInit {
 
       this.adminService.uploadVideo(formData, this.videoTiers, this.videoName, this.notificationMethod)
       .subscribe(
-        () => this.getVideos(),
+        () => {
+          this.addFailure = false;
+          this.getVideos();
+        },
         () => this.addFailure = true
       )
     }
@@ -77,6 +80,7 @@ export class AdminComponent implements OnInit {
   getVideos() {
     this.adminService.getAllVideos().subscribe(
       (videos) =>  {
+        this.getFailure = false;
         this.videos = videos;
         this.videoDataSource = new MatTableDataSource(this.videos);
       },
@@ -87,6 +91,7 @@ export class AdminComponent implements OnInit {
   getUsers() {
     this.adminService.getAllUsers().subscribe(
       (users) =>  {
+        this.getFailure = false;
         this.users = users;
         this.userDataSource = new MatTableDataSource(this.users);
       },
@@ -149,7 +154,10 @@ export class AdminComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.adminService.updateTiersOnVideo(id, result).subscribe(
-            () => this.getVideos(),
+            () => {
+              this.maintenanceFailure = false;
+              this.getVideos();
+            },
             () => this.maintenanceFailure = true
           );
         }
@@ -169,7 +177,10 @@ export class AdminComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.adminService.updateVideoName(id, result).subscribe(
-            () => this.getVideos(),
+            () => {
+              this.maintenanceFailure = false;
+              this.getVideos();
+            },
             () => this.maintenanceFailure = true
           );
         }
@@ -189,7 +200,10 @@ export class AdminComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.adminService.removeVideo(id).subscribe(
-            () => this.getVideos(), 
+            () => {
+              this.maintenanceFailure = false;
+              this.getVideos();
+            },
             () => this.maintenanceFailure = true
           );
         }
