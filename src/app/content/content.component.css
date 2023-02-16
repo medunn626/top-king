@@ -160,3 +160,7 @@ outline: none;
     margin-top: 20px;
     margin-bottom: -15px;
 }
+
+.additional-margin {
+    margin-right: 15px;
+  }

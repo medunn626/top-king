@@ -2,14 +2,22 @@
     <div *ngIf="updatePlanFailed" class="failure">
         <h4>There was a problem finalizing your purhcase. Please contact us for assistance.</h4>
     </div>
-    <div *ngIf="!userHasAPackage">
-        <div id="wrapper">
-            <h1>Plans</h1>
-        </div>
-        <br/>
-        <div *ngFor="let package of usersNonPackages" id="wrapper">
+    <div *ngIf="!userHasAPackage" id="wrapper">
+        <h1>Plans</h1>
+    </div>
+    <br/>
+    <div *ngIf="!userHasAPackage" [id]="!smallerScreen? 'wrapper' : ''">
+        <div *ngFor="let package of usersNonPackages"
+            id="wrapper"
+            [ngClass]="{'additional-margin' : !smallerScreen}"
+        >
             <div class="package-container">
-                <img class="package-title" [src]="package.titleImageSrc" width="225" height="200"/>
+                <img class="package-title"
+                    (click)="purchasePlan(package.id)"
+                    [src]="package.titleImageSrc"
+                    width="225"
+                    height="200"/>
+                <div class="image-hover"></div>
                 <br/>
                 <br/>
                 <ul *ngFor="let desc of package.descriptions">
@@ -33,7 +41,12 @@
     <br/>
     <div id="wrapper">
         <div class="package-container">
-            <img class="consulting-title" [src]="consultingImgSrc" width="180" height="180"/>
+            <img class="consulting-title"
+                (click)="triggerConfirmCallDialog()"
+                [src]="consultingImgSrc"
+                width="180"
+                height="180"/>
+            <div class="image-hover"></div>
             <ul>
                 <li>Personal 30-min face-to-face or voice call</li>
                 <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>

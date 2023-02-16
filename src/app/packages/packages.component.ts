@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
@@ -29,6 +29,7 @@ export class PackagesComponent implements OnInit {
   usersNonPackages: Package[];
   updatePlanFailed = false;
   consultingImgSrc = '/assets/phone.jpg';
+  smallerScreen = false;
   
   constructor(
     public router: Router,
@@ -43,6 +44,7 @@ export class PackagesComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = !!localStorage.getItem('userId');
     this.setOrUpdatePlans();
+    this.onResize();
   }
 
   private setOrUpdatePlans(): void {
@@ -136,6 +138,11 @@ export class PackagesComponent implements OnInit {
         );
       }
     });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.smallerScreen = window.innerWidth < 900;
   }
 
 }

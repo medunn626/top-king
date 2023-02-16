@@ -166,4 +166,29 @@ h3 {
   .package-container {
     width: 300px;
   }
+
+  .additional-margin {
+    margin-right: 5px;
+  }
+
+  .image-hover {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .package-container:hover .package-title, 
+  .package-container:hover .consulting-title {
+    opacity: 0.3;
+    cursor: grab;
+  }
+  
+  .package-container:hover .image-hover  {
+    opacity: 1;
+  }
   

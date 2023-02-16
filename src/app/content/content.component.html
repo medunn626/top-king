@@ -9,12 +9,26 @@
         <img class="plan-label" [src]="tierToImgSrc.get(usersCurrentPlan)" width="125" height="100"/>
     </div>
     <br/>
-    <div *ngFor="let video of userAccessVideos" id="wrapper">
-        <div>
-            <h4 class="video-label">{{ video.docName }}</h4>
-            <video width="320" height="240" controls>
-                <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
-            </video>
+    <div *ngIf="smallerScreen">
+        <div *ngFor="let video of userAccessVideos" id="wrapper">
+            <div>
+                <h4 class="video-label">{{ video.docName }}</h4>
+                <video width="320" height="240" controls>
+                    <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!smallerScreen">
+        <div *ngFor="let videoGroup of videoGroups" id="wrapper" fxLayout="row">
+            <div *ngFor="let video of videoGroup" fxLayout="column">
+                <div class="additional-margin">
+                    <h4 class="video-label">{{ video.docName }}</h4>
+                    <video width="320" height="240" controls>
+                        <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
+                    </video>
+                </div>
+            </div>
         </div>
     </div>
     <div *ngIf="usersCurrentPlan">

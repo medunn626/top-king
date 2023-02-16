@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
@@ -12,6 +12,7 @@ import { UpdateUserDialog, UserDialogData } from './update-user-dialog/update-us
 })
 export class AccountComponent implements OnInit {
   user = <any>{};
+  smallerScreen = false;
   environment = environment;
   
   constructor(
@@ -21,6 +22,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.userHasPlan = !!localStorage.getItem('productTier');
+    this.onResize();
   }
 
   modifyAccountInfo(): void {
@@ -61,12 +63,8 @@ export class AccountComponent implements OnInit {
     this.accountService.signOut();
   }
 
-  private getDeformattedPhoneNumber(): string {
-    if (this.user.phoneNumber) {
-      const formattedPhoneNumber = this.user.phoneNumber;
-      const deformattedNumber = formattedPhoneNumber.replace(/[() -]/g, '');
-      return deformattedNumber;
-    }
-    return '';
+  @HostListener('window:resize')
+  onResize() {
+    this.smallerScreen = window.innerWidth < 900;
   }
 }
