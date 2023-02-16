@@ -155,6 +155,12 @@ h3 {
 
   .package-title {
     text-align: center;
+    margin-left: 35px;
+  }
+
+  .consulting-title {
+    text-align: center;
+    margin-left: 50px;
   }
 
   .package-container {

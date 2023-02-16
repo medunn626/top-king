@@ -150,3 +150,13 @@ outline: none;
 	text-align: center;
 	color: red;
 }
+
+.plan-label {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.video-label {
+    margin-top: 20px;
+    margin-bottom: -15px;
+}

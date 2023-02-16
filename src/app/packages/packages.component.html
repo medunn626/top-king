@@ -1,19 +1,17 @@
 <div>
-    <div id="wrapper">
-        <h1>Plans</h1>
-    </div>
-    <br/>
     <div *ngIf="updatePlanFailed" class="failure">
         <h4>There was a problem finalizing your purhcase. Please contact us for assistance.</h4>
     </div>
-    <div *ngIf="usersPackage" id="wrapper">
-        <h4>Your Current Plan: {{ usersPackage.title }} </h4>
-    </div>
-    <br/>
-    <div *ngIf="!usersPackage">
+    <div *ngIf="!userHasAPackage">
+        <div id="wrapper">
+            <h1>Plans</h1>
+        </div>
+        <br/>
         <div *ngFor="let package of usersNonPackages" id="wrapper">
             <div class="package-container">
-                <h3 class="package-title">{{ package.title }}</h3>
+                <img class="package-title" [src]="package.titleImageSrc" width="225" height="200"/>
+                <br/>
+                <br/>
                 <ul *ngFor="let desc of package.descriptions">
                     <li>{{ desc }}</li>
                 </ul>
@@ -35,7 +33,7 @@
     <br/>
     <div id="wrapper">
         <div class="package-container">
-            <h3 class="package-title">Consulation Call</h3>
+            <img class="consulting-title" [src]="consultingImgSrc" width="180" height="180"/>
             <ul>
                 <li>Personal 30-min face-to-face or voice call</li>
                 <li>We'll talk your goals & what you would like to accomplsh to positively motivate you!</li>

@@ -27,15 +27,19 @@ export class AppComponent implements OnInit {
     this.setSrcLinksForProd();
    }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.auth.setStatus();
   }
 
-  signOut(): void {
-    this.auth.signOut();
+  triggerAffiliateDialog(): void {
+    const dialogRef = this.dialog.open(ReferralDialogComponent, {
+      disableClose: true,
+      width: '75%'
+    });
+    dialogRef.afterClosed().subscribe(success => this.referralError = !success);
   }
 
-  triggerAffiliateDialog(): void {
+  triggerAccountDialog(): void {
     const dialogRef = this.dialog.open(ReferralDialogComponent, {
       disableClose: true,
       width: '75%'

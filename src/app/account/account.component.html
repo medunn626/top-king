@@ -1,0 +1,45 @@
+<div id="wrapper">
+  <form ngNativeValidate>
+    <div *ngIf="accountService.updateUserFailure" class="failure">
+      <h4>There was a problem updating your information. Please try again.</h4>
+    </div>
+    <div class="account-header" id="wrapper">
+      <h1>Your Account</h1>
+    </div>
+    <div id="wrapper">
+      <h4>Modify Account Info</h4>
+    </div>
+    <div id="wrapper">
+      <a
+        [ngClass]="{'modify-acct-link-prod' : environment.production}"
+        class="modify-acct-link"
+        (click)="modifyAccountInfo()">
+        Modify Acc
+      </a>
+    </div>
+    <div *ngIf="accountService.userHasPlan" id="wrapper">
+      <h4>Remove or Switch  Plan</h4>
+    </div>
+    <div id="wrapper">
+      <a
+        *ngIf="accountService.userHasPlan"
+        [ngClass]="{'remove-plan-link-prod' : environment.production}"
+        class="remove-plan-link"
+        (click)="removePlan()">
+        Modify Acc
+      </a>
+    </div>
+    <div id="wrapper">
+      <h4>Sign Out</h4>
+    </div>
+    <div id="wrapper">
+      <a
+        [ngClass]="{'sign-out-link-prod' : environment.production}"
+        class="sign-out-link"
+        (click)="signOut()">
+        Modify Acc
+      </a>
+    </div>
+  </form>
+</div>
+<br/>

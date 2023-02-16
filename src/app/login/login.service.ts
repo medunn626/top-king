@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 export interface UserResponse {
   id?: number;
-  productTier: string;
+  email: string;
+  name: string;
   phoneNumber?: string;
+  productTier: string;
 }
 
 export interface UserRequest {
   id?: number;
   email: string;
-  password: string;
+  password?: string;
   name?: string;
   phoneNumber?: string;
   productTier?: string;
@@ -33,23 +35,22 @@ export class LoginService {
     private http: HttpClient
   ) { }
 
-  login(userToSave: UserRequest) {
-    const params = new HttpParams()
-      .append('email', userToSave.email)
-      .append('password', userToSave.password)
-      .append('productTier', userToSave.productTier ?? '');
-    this.http.get<UserResponse>(`${environment.apiServer}/login`, {params})
+  login(userToFindOrUpdate: UserRequest) {
+    this.http.put<UserResponse>(`${environment.apiServer}/login`, userToFindOrUpdate)
     .subscribe(
       (existingUser) => {
-        if (existingUser.id) {
+        if (existingUser.email) {
           localStorage.setItem('userId', '' + existingUser.id);
-          localStorage.setItem('productTier', existingUser.productTier);
+          localStorage.setItem('productTier', existingUser.productTier ?? '');
+          localStorage.setItem('clientEmail', existingUser.email);
           localStorage.setItem('phoneNumber', existingUser.phoneNumber ?? '');
+          localStorage.setItem('clientName', existingUser.name);
           this.loginFailure = false;
           this.signUpFailure = false;
           this.setStatus();
-          this.determineLoginNavigation(userToSave.productTier ?? '');
+          this.router.navigate(['/content/']);
         } else {
+          localStorage.setItem('unconfirmedUserId', '' + existingUser.id);
           this.loggedInAndUnConfirmed = true;
         }
       },
@@ -95,13 +96,15 @@ export class LoginService {
         (savedUser) => {
           if (savedUser.id) {
             localStorage.setItem('userId', '' + savedUser.id);
-            localStorage.setItem('productTier', savedUser.productTier);
+            localStorage.setItem('productTier', savedUser.productTier ?? '');
+            localStorage.setItem('clientEmail', savedUser.email);
             localStorage.setItem('phoneNumber', savedUser.phoneNumber ?? '');
+            localStorage.setItem('clientName', savedUser.name);
             localStorage.removeItem('unconfirmedUserId');
             this.loggedInAndUnConfirmed = false;
             this.incorrectCode = false;
             this.setStatus();
-            this.determineLoginNavigation(savedUser.productTier ?? '');
+            this.router.navigate(['/content/']);
           } else {
             this.incorrectCode = true;
           }
@@ -130,23 +133,9 @@ export class LoginService {
       });
     }
 
-  signOut() {
-    localStorage.clear();
-    this.setStatus();
-    this.router.navigate(['/'])
-  }
-
   setStatus(): void {
     this.loggedInAndConfirmed = !this.loggedInAndUnConfirmed && !!localStorage.getItem('userId');
     this.isAdmin = this.loggedInAndConfirmed && localStorage.getItem('productTier') === 'admin';
-  }
-
-  determineLoginNavigation(intendedPlanToPurchase: string): void {
-    if (intendedPlanToPurchase) {
-      this.router.navigate(['/plans/']);
-    } else {
-      this.router.navigate(['/content/']);
-    }
   }
 
 }

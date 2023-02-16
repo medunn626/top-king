@@ -18,10 +18,6 @@ export class ReferralDialogComponent {
     this.dialogRef.close(true);
   }
 
-  updatePaymentMethod(value) {
-    console.log(value);
-  }
-
   confirm() {
     const email = this.data.referralEmail;
     const paymentMethod = this.data.paymentMethod;

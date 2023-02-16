@@ -7,11 +7,16 @@ import { ContentComponent } from './content/content.component';
 import { HomeComponent } from './home/home.component';
 import { PackagesComponent } from './packages/packages.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'account',
+    component: AccountComponent
   },
   {
     path: 'admin',

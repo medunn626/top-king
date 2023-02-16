@@ -11,6 +11,7 @@ import { PackagesModule } from './packages/packages.module';
 import { ReferralDialogModule } from './referral-dialog/referral-dialog.module';
 import { LoginService } from './login/login.service';
 import { ChangePasswordModule } from './change-password/change-password.module';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ChangePasswordModule } from './change-password/change-password.module';
   ],
   imports: [
     BrowserModule,
+    AccountModule,
     AdminModule,
     LoginModule,
     AppRoutingModule,

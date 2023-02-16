@@ -1,0 +1,48 @@
+<div class="dialog" cdkFocusRegionStart>
+    <div class="content">
+        <div mat-dialog-content>
+            <h4>Modify Account Info</h4>
+            <label for="email">Email</label>
+            <br/>
+            <input 
+              [(ngModel)]="user.email"
+              id="emailEdit"
+              name="email"
+              type="email"
+              placeholder="{{inputData.currentEmail}}"
+            />
+            <br/>
+            <i>If modifying your email, you will be asked to log back in and verify your new email</i>
+            <br/>
+            <br/>
+            <label for="clientName">Name</label>
+            <br/>
+            <input
+              [(ngModel)]="user.name"
+              id="clientNameEdit"
+              name="clientName"
+              type="text"
+              placeholder="{{inputData.currentName}}"
+              size="30"
+            />
+            <br/>
+            <br/>
+            <label for="phoneNumber">Phone Number</label>
+            <br/>
+            <input
+              [(ngModel)]="user.phoneNumber"
+              appPhoneMask
+              id="phoneNumberEdit"
+              name="phoneNumber"
+              type="phone"
+              placeholder="{{inputData.currentPhoneNumber}}"
+              pattern="[0-9]*"
+              inputmode="numeric"
+            />
+        </div>
+        <div class="dialog-buttons" mat-dialog-actions>
+            <button class="cancel-button action-button" mat-button (click)="cancel()">Cancel</button>
+            <button class="action-button" mat-button (click)="updateUser()">Submit</button>
+        </div>
+    </div>
+</div>

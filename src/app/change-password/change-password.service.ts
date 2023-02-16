@@ -2,22 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { LoginService } from '../login/login.service';
-
-export interface UserResponse {
-  id?: number;
-  productTier: string;
-  phoneNumber?: string;
-}
-
-export interface UserRequest {
-  id?: number;
-  email: string;
-  password: string;
-  name?: string;
-  phoneNumber?: string;
-  productTier?: string;
-}
+import { LoginService, UserRequest, UserResponse } from '../login/login.service';
 
 @Injectable()
 export class ChangePasswordService {
@@ -63,8 +48,10 @@ export class ChangePasswordService {
     .subscribe(
       (savedUser) => {
         localStorage.setItem('userId', '' + savedUser.id);
-        localStorage.setItem('productTier', savedUser.productTier);
+        localStorage.setItem('productTier', savedUser.productTier ?? '');
+        localStorage.setItem('clientEmail', savedUser.email);
         localStorage.setItem('phoneNumber', savedUser.phoneNumber ?? '');
+        localStorage.setItem('clientName', savedUser.name);
         this.changePasswordFailure = false;
         this.loginService.loggedInAndConfirmed = true;
         this.router.navigate(['/content/']);
