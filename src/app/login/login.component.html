@@ -6,7 +6,7 @@
     <div *ngIf="auth.loginFailure" class="failure">
       <h4>Please try again. This username doesn't exist or you have entered the fields incorrectly.</h4>
     </div>
-    <div *ngIf="auth.signUpFailure" class="failure">
+    <div *ngIf="auth.signUpFailure || auth.emailExists" class="failure">
       <h4>Please try again. This username already exists or you have entered the fields incorrectly.</h4>
     </div>
     <div *ngIf="auth.incorrectCode && !auth.signUpFailure && !auth.loginFailure" class="failure">

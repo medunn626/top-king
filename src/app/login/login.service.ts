@@ -26,7 +26,7 @@ export class LoginService {
   loggedInAndUnConfirmed = false;
   loginFailure = false;
   signUpFailure = false;
-  signOutFailure = false;
+  emailExists = false;
   incorrectCode = false;
   isAdmin = false;
 
@@ -68,10 +68,15 @@ export class LoginService {
     this.http.post<UserResponse>(`${environment.apiServer}/sign-up`, userToCreate)
     .subscribe(
       (createdUser) => {
-        this.loggedInAndUnConfirmed = true;
-        this.loginFailure = false;
-        this.signUpFailure = false;
-        localStorage.setItem('unconfirmedUserId', '' + createdUser.id);
+        if (!createdUser.id) {
+          this.emailExists = true;
+        } else {
+          this.loggedInAndUnConfirmed = true;
+          this.loginFailure = false;
+          this.signUpFailure = false;
+          this.emailExists = false;
+          localStorage.setItem('unconfirmedUserId', '' + createdUser.id);
+        }
       }, 
       () => {
         const emailField = <HTMLInputElement>document.getElementById('emailLog');
