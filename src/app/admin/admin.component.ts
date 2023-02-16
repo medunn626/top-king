@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AdminService, Video } from './admin.service';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
+import { UserResponse } from '../login/login.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,11 +16,19 @@ export class AdminComponent implements OnInit {
   file: File;
   videos: Video[];
   videoTiers = '';
-  displayedColumns: string[] = [
+  users: UserResponse[];
+  videoDisplayedColumns: string[] = [
     'docName',
     'productTiersAppliedTo'
   ];
-  dataSource;
+  videoDataSource;
+  userDisplayedColumns: string[] = [
+    'name',
+    'email',
+    'phoneNumber',
+    'productTier'
+  ];
+  userDataSource;
   addFailure = false;
   getFailure = false;
   maintenanceFailure = false;
@@ -32,6 +41,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVideos();
+    this.getUsers();
   }
 
   updateFile(event) {
@@ -68,13 +78,23 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllVideos().subscribe(
       (videos) =>  {
         this.videos = videos;
-        this.dataSource = new MatTableDataSource(this.videos);
+        this.videoDataSource = new MatTableDataSource(this.videos);
       },
       () => this.getFailure = true
     );
   }
 
-  getFriendlyNames(result: string | string[]) {
+  getUsers() {
+    this.adminService.getAllUsers().subscribe(
+      (users) =>  {
+        this.users = users;
+        this.userDataSource = new MatTableDataSource(this.users);
+      },
+      () => this.getFailure = true
+    );
+  }
+
+  getFriendlyTierNames(result: string | string[]) {
     if (typeof result !== 'string') {
       return result
       .filter(res => res !== 'admin')
@@ -90,6 +110,21 @@ export class AdminComponent implements OnInit {
         }
       });
     } 
+    return result;
+  }
+
+  getFriendlyTierName(columnName: string, result: string) {
+    if (columnName === 'productTier') {
+      if (result === '1') {
+        return 'Beginner';
+      } else if (result === '2') {
+        return ' Intermediate';
+      } else if (result === '3') {
+        return ' Elite';
+      } else {
+        return '';
+      }
+    }
     return result;
   }
 

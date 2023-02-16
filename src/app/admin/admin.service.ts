@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { UserResponse } from '../login/login.service';
 
 export interface Video {
     id?: number;
@@ -36,6 +37,10 @@ export class AdminService {
 
   getAllVideos(): Observable<Video[]> {
     return this.http.get<Video[]>(`${environment.apiServer}/videos/retrieve/admin`);
+  }
+
+  getAllUsers(): Observable<UserResponse[]> {
+    return this.http.get<UserResponse[]>(`${environment.apiServer}/users`);
   }
 
 }
