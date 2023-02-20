@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { environment } from 'src/environments/environment';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { AccountService } from './account.service';
 import { UpdateUserDialog, UserDialogData } from './update-user-dialog/update-user-dialog.component';
@@ -13,7 +12,6 @@ import { UpdateUserDialog, UserDialogData } from './update-user-dialog/update-us
 export class AccountComponent implements OnInit {
   user = <any>{};
   smallerScreen = false;
-  environment = environment;
   
   constructor(
     public accountService: AccountService,

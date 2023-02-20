@@ -184,15 +184,4 @@ a:hover {
 	background-image: url("/assets/sign-out.png");
 }
 
-.modify-acct-link-prod {
-	background-image: url("/top-king/assets/edit-acct.png");
-}
-
-.remove-plan-link-prod {
-	background-image: url("/top-king/assets/remove-plan.png");
-}
-
-.sign-out-link-prod {
-	background-image: url("/top-king/assets/sign-out.png");
-}
 

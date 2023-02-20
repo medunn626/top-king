@@ -1,8 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { ConsultingFormDialog } from './consulting-form-dialog/consulting-form-dialog.component';
 import { PackagesService } from './packages.service';
@@ -35,11 +33,7 @@ export class PackagesComponent implements OnInit {
     public router: Router,
     public dialog: MatDialog,
     private packagesService: PackagesService
-  ) {
-    if (environment.production) {
-      this.consultingImgSrc = '/top-king/assets/phone.jpg';
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!localStorage.getItem('userId');
@@ -59,7 +53,7 @@ export class PackagesComponent implements OnInit {
       {
         id: 1,
         title: 'Beginner',
-        titleImageSrc: environment.production ? '/top-king/assets/beginner.png' : '/assets/beginner.png',
+        titleImageSrc: '/assets/beginner.png',
         descriptions: [
           'This program will provide world renown introduction fitness exercises to help incorporate ' +
           'into your daily exercises including free weights & calisthenics!!'
@@ -70,7 +64,7 @@ export class PackagesComponent implements OnInit {
       {
         id: 2,
         title: 'Intermediate',
-        titleImageSrc:  environment.production ? '/top-king/assets/int.png' : '/assets/int.png',
+        titleImageSrc: '/assets/int.png',
         descriptions: [
           'This program includes muscle and strength training exercises to take basic training to next level with machines and much more!!'
         ],
@@ -80,7 +74,7 @@ export class PackagesComponent implements OnInit {
       {
         id: 3,
         title: 'Elite',
-        titleImageSrc: environment.production ? '/top-king/assets/elite.jpg' : '/assets/elite.jpg',
+        titleImageSrc: '/assets/elite.jpg',
         descriptions: [
           'Unlimited videos for LIFE!!',
           'Diet tips & hacks!',
@@ -103,26 +97,37 @@ export class PackagesComponent implements OnInit {
   }
 
   private triggerConfirmPlanDialog(planNumber: number): void {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      disableClose: true,
-      width: '75%'
-    });
-    dialogRef.componentInstance.confirmMessage = `Please confirm you would like to purchase this this plan`;
+    window.open('https://buy.stripe.com/test_5kA8xne2LdyYeHu000', '_blank');
+    this.packagesService.setPlan(planNumber + '')
+    .subscribe(
+            (response) => {
+              // this.updatePlanFailed = false;
+              // localStorage.setItem('productTier', response.productTier ?? '');
+              // this.setOrUpdatePlans();
+              // this.router.navigate(['/content']);
+            },
+            () => this.updatePlanFailed = true
+          );
+    // const dialogRef = this.dialog.open(ConfirmationDialog, {
+    //   disableClose: true,
+    //   width: '75%'
+    // });
+    // dialogRef.componentInstance.confirmMessage = `Please confirm you would like to purchase this this plan`;
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.packagesService.setPlan(planNumber + '')
-        .subscribe(
-          (response) => {
-            this.updatePlanFailed = false;
-            localStorage.setItem('productTier', response.productTier ?? '');
-            this.setOrUpdatePlans();
-            this.router.navigate(['/content']);
-          },
-          () => this.updatePlanFailed = true
-        );
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.packagesService.setPlan(planNumber + '')
+    //     .subscribe(
+    //       (response) => {
+    //         this.updatePlanFailed = false;
+    //         localStorage.setItem('productTier', response.productTier ?? '');
+    //         this.setOrUpdatePlans();
+    //         this.router.navigate(['/content']);
+    //       },
+    //       () => this.updatePlanFailed = true
+    //     );
+    //   }
+    // });
   }
 
   triggerConfirmCallDialog() {

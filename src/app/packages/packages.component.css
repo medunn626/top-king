@@ -196,4 +196,9 @@ h3 {
   .package-container:hover .image-hover  {
     opacity: 1;
   }
+
+  li {
+    font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
+    font-size: 17px;
+  }
   

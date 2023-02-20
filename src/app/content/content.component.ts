@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { ContentService, Video } from './content.service';
 
 @Component({
@@ -28,16 +27,7 @@ export class ContentComponent implements OnInit {
   constructor(
     public router: Router,
     private readonly contentService: ContentService
-  ) {
-    if (environment.production) {
-      this.tierToImgSrc = new Map([
-        ['1', '/top-king/assets/beginner.png'],
-        ['2', '/top-king/assets/int.png'],
-        ['3', '/top-king/assets/elite.jpg'],
-        ['admin', '/top-king/assets/elite.jpg' ]
-      ]);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.usersCurrentPlan = localStorage.getItem('productTier') ?? '';

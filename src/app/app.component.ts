@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { LoginService } from './login/login.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.date = '' + new Date().getFullYear();
-    this.setSrcLinksForProd();
    }
 
   ngOnInit(): void {
@@ -47,13 +45,4 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(success => this.referralError = !success);
   }
 
-  private setSrcLinksForProd(): void {
-    if (environment.production) {
-      this.logoLink = '/top-king' + this.logoLink;
-      this.fbLink = '/top-king' + this.fbLink;
-      this.igLink = '/top-king' + this.igLink;
-      this.ytLink = '/top-king' + this.ytLink;
-      this.ttLink = '/top-king' + this.ttLink;
-    }
-  }
 }
