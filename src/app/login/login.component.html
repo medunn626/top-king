@@ -1,7 +1,7 @@
 <div id="wrapper">
   <form ngNativeValidate>
     <div *ngIf="showLoginFirstMessage" class="failure">
-      <h4>Please log in or create an account so that we can complete your purchase.</h4>
+      <h4>Please log in or create an account so that we can complete your purchase. Please allow popups from the payment service if prompted.</h4>
     </div>
     <div *ngIf="auth.loginFailure" class="failure">
       <h4>Please try again. This username doesn't exist or you have entered the fields incorrectly.</h4>
