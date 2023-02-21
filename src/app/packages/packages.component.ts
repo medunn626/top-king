@@ -98,11 +98,11 @@ export class PackagesComponent implements OnInit {
 
   private triggerStripePayment(planNumber: number): void {
     if (planNumber === 1) {
-      window.open('https://buy.stripe.com/test_5kA8xne2LdyYeHu000', '_blank');
+      window.open('https://buy.stripe.com/7sIbM84ph18AbmweUX', '_blank');
     } else if (planNumber === 2) {
-      window.open('https://buy.stripe.com/test_fZecND9Mv8eEeHuaEF', '_blank');
+      window.open('https://buy.stripe.com/28obM8g7Z9F64Y8bIK', '_blank');
     } else if (planNumber === 3) {
-      window.open('https://buy.stripe.com/test_dR66pfcYHcuU0QE002', '_blank');
+      window.open('https://buy.stripe.com/eVabM8g7Z18A76g9AB', '_blank');
     }
   } 
 
@@ -113,7 +113,7 @@ export class PackagesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(email => {
       if (email) {
-        window.open('https://buy.stripe.com/test_aEU00R1fZ1Qg1UI8wz', '_blank');
+        window.open('https://buy.stripe.com/fZe03qaNFaJa9eo144', '_blank');
         this.packagesService.setupConsultingCall(email)
         .subscribe(
           () => this.updatePlanFailed = false,
