@@ -12,6 +12,7 @@ import { ReferralDialogModule } from './referral-dialog/referral-dialog.module';
 import { LoginService } from './login/login.service';
 import { ChangePasswordModule } from './change-password/change-password.module';
 import { AccountModule } from './account/account.module';
+import { ConfirmationModule } from './confirmation/confirmation.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AccountModule } from './account/account.module';
     LoginModule,
     AppRoutingModule,
     ContactModule,
+    ConfirmationModule,
     PackagesModule,
     ContentModule,
     HomeModule,

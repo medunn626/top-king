@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { PackagesComponent } from './packages/packages.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AccountComponent } from './account/account.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ConfirmationGuard } from './confirmation/confirmation.guard';
 
 const routes: Routes = [
   {
@@ -33,6 +35,11 @@ const routes: Routes = [
   {
     path: 'content',
     component: ContentComponent
+  },
+  {
+    path: 'confirmation/tier/:tier',
+    component: ConfirmationComponent,
+    canActivate: [ConfirmationGuard]
   },
   {
     path: 'home',

@@ -92,43 +92,19 @@ export class PackagesComponent implements OnInit {
       localStorage.setItem('productTierIntendingToPurchase', planNumber + '');
       this.router.navigate(['login']);
     } else {
-      this.triggerConfirmPlanDialog(planNumber);
+      this.triggerStripePayment(planNumber);
     }
   }
 
-  private triggerConfirmPlanDialog(planNumber: number): void {
-    window.open('https://buy.stripe.com/test_5kA8xne2LdyYeHu000', '_blank');
-    this.packagesService.setPlan(planNumber + '')
-    .subscribe(
-            (response) => {
-              // this.updatePlanFailed = false;
-              // localStorage.setItem('productTier', response.productTier ?? '');
-              // this.setOrUpdatePlans();
-              // this.router.navigate(['/content']);
-            },
-            () => this.updatePlanFailed = true
-          );
-    // const dialogRef = this.dialog.open(ConfirmationDialog, {
-    //   disableClose: true,
-    //   width: '75%'
-    // });
-    // dialogRef.componentInstance.confirmMessage = `Please confirm you would like to purchase this this plan`;
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.packagesService.setPlan(planNumber + '')
-    //     .subscribe(
-    //       (response) => {
-    //         this.updatePlanFailed = false;
-    //         localStorage.setItem('productTier', response.productTier ?? '');
-    //         this.setOrUpdatePlans();
-    //         this.router.navigate(['/content']);
-    //       },
-    //       () => this.updatePlanFailed = true
-    //     );
-    //   }
-    // });
-  }
+  private triggerStripePayment(planNumber: number): void {
+    if (planNumber === 1) {
+      window.open('https://buy.stripe.com/test_5kA8xne2LdyYeHu000', '_blank');
+    } else if (planNumber === 2) {
+      window.open('https://buy.stripe.com/test_fZecND9Mv8eEeHuaEF', '_blank');
+    } else if (planNumber === 3) {
+      window.open('https://buy.stripe.com/test_dR66pfcYHcuU0QE002', '_blank');
+    }
+  } 
 
   triggerConfirmCallDialog() {
     const dialogRef = this.dialog.open(ConsultingFormDialog, {
@@ -137,6 +113,7 @@ export class PackagesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(email => {
       if (email) {
+        window.open('https://buy.stripe.com/test_aEU00R1fZ1Qg1UI8wz', '_blank');
         this.packagesService.setupConsultingCall(email)
         .subscribe(
           () => this.updatePlanFailed = false,

@@ -1,0 +1,19 @@
+<div>
+    <div *ngIf="confirmationService.updatePlanError" class="failure">
+        <h4>There was a problem updating your plan. Please refresh the screen or contact us.</h4>
+    </div>
+    <div id="wrapper">
+        <h1>Thank you!</h1>
+    </div>
+    <div id="wrapper">
+        <h5>
+            A payment to <b>Top King Training</b> will appear on your statement.
+            We've also sent a confirmation email for your records.
+        </h5>
+    </div>
+    <div id="wrapper">
+        <a class="nav-link" [routerLink]="isLoggedIn? '/content' : '/plans'">See Training Content</a>
+    </div>
+</div>
+<br/>
+<br/>

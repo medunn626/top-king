@@ -36,6 +36,7 @@ export class LoginService {
   ) { }
 
   login(userToFindOrUpdate: UserRequest) {
+    const intendedPlanToPurchase = userToFindOrUpdate.productTier;
     this.http.put<UserResponse>(`${environment.apiServer}/login`, userToFindOrUpdate)
     .subscribe(
       (existingUser) => {
@@ -48,7 +49,11 @@ export class LoginService {
           this.loginFailure = false;
           this.signUpFailure = false;
           this.setStatus();
-          this.router.navigate(['/content/']);
+          if (intendedPlanToPurchase) {
+            this.triggerStripePayment(+intendedPlanToPurchase);
+          } else {
+            this.router.navigate(['/content/']);
+          }
         } else {
           localStorage.setItem('unconfirmedUserId', '' + existingUser.id);
           this.loggedInAndUnConfirmed = true;
@@ -95,6 +100,7 @@ export class LoginService {
 
   confirmEmail(code: string) {
     const id = localStorage.getItem('unconfirmedUserId') ?? '';
+    const intendedPlanToPurchase = localStorage.getItem('productTierIntendingToPurchase') ?? '';
     if (id) {
       this.http.get<UserResponse>(`${environment.apiServer}/confirm-code/user/${id}/code/${code}`, {})
       .subscribe(
@@ -109,7 +115,11 @@ export class LoginService {
             this.loggedInAndUnConfirmed = false;
             this.incorrectCode = false;
             this.setStatus();
-            this.router.navigate(['/content/']);
+            if (intendedPlanToPurchase) {
+              this.triggerStripePayment(+intendedPlanToPurchase);
+            } else {
+              this.router.navigate(['/content/']);
+            }
           } else {
             this.incorrectCode = true;
           }
@@ -141,6 +151,16 @@ export class LoginService {
   setStatus(): void {
     this.loggedInAndConfirmed = !this.loggedInAndUnConfirmed && !!localStorage.getItem('userId');
     this.isAdmin = this.loggedInAndConfirmed && localStorage.getItem('productTier') === 'admin';
+  }
+
+  private triggerStripePayment(planNumber: number): void {
+    if (planNumber === 1) {
+      window.open('https://buy.stripe.com/test_5kA8xne2LdyYeHu000', '_blank');
+    } else if (planNumber === 2) {
+      window.open('https://buy.stripe.com/test_fZecND9Mv8eEeHuaEF', '_blank');
+    } else if (planNumber === 3) {
+      window.open('https://buy.stripe.com/test_dR66pfcYHcuU0QE002', '_blank');
+    }
   }
 
 }
