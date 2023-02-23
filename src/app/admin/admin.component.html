@@ -30,9 +30,10 @@
         <mat-checkbox (change)="updateNotificationMethods($event.checked)">
             Send Email Notification?
         </mat-checkbox>
-        <p class="submit button">
+        <p *ngIf="!loading" class="submit button">
             <input type="submit" value="Upload"/>
         </p>
+        <h4 *ngIf="loading" style="text-align: right;">Loading...</h4>
         <br/>
     </form>
 </div>

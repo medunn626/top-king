@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit {
   getFailure = false;
   maintenanceFailure = false;
   notificationMethod = 'N';
+  loading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -63,6 +64,7 @@ export class AdminComponent implements OnInit {
         this.notificationMethod && 
         this.videoName &&
         this.file) {
+      this.loading = true;
       const formData = new FormData();
       formData.append('file', this.file);
 
@@ -71,8 +73,12 @@ export class AdminComponent implements OnInit {
         () => {
           this.addFailure = false;
           this.getVideos();
+          this.loading = false;
         },
-        () => this.addFailure = true
+        () => {
+          this.addFailure = true
+          this.loading = false;
+        }
       )
     }
   }
