@@ -32,7 +32,7 @@ export class AdminComponent implements OnInit {
   addFailure = false;
   getFailure = false;
   maintenanceFailure = false;
-  notificationMethod = '';
+  notificationMethod = 'N';
 
   constructor(
     public dialog: MatDialog,
