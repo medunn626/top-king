@@ -13,9 +13,16 @@
         <div *ngFor="let video of userAccessVideos" id="wrapper">
             <div>
                 <h4 class="video-label">{{ video.docName }}</h4>
-                <video width="320" height="240" controls>
-                    <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
+                <video
+                    [poster]="video.docType === 'video/quicktime' ? '/assets/tko-logo.jpg' : ''"
+                    width="320"
+                    height="240"
+                    controls>
+                        <source [src]="video.driveSourceLink" [type]="video.docType">
                 </video>
+                <div id="wrapper">
+                    <a [href]="video.driveSourceLink">Download Video</a>
+                </div>
             </div>
         </div>
     </div>
@@ -24,9 +31,17 @@
             <div *ngFor="let video of videoGroup" fxLayout="column">
                 <div class="additional-margin">
                     <h4 class="video-label">{{ video.docName }}</h4>
-                    <video width="320" height="240" controls>
-                        <source [src]="'data:video/mp4;base64,' + video.data" type="video/mp4">
+                    <video
+                        [poster]="video.docType === 'video/quicktime' ? 'assets/tko-logo.jpg' : ''"
+                        width="320"
+                        height="240" 
+                        controls>
+                            <source [src]="video.driveSourceLink" [type]="video.docType">
                     </video>
+                    <br/>
+                    <div id="wrapper">
+                        <a [href]="video.driveSourceLink">Download Video</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,8 @@ export interface Video {
     id?: number;
     docName: string;
     docType: string;
-    data: any;
+    driveId: string;
+    driveSourceLink: string;
     productTiersAppliedTo: string[];
 }
 

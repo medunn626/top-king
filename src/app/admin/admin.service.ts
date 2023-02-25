@@ -8,7 +8,7 @@ export interface Video {
     id?: number;
     docName: string;
     docType: string;
-    data: any;
+    driveId: string;
     productTiersAppliedTo: string[];
 }
 
@@ -36,7 +36,7 @@ export class AdminService {
   }
 
   getAllVideos(): Observable<Video[]> {
-    return this.http.get<Video[]>(`${environment.apiServer}/videos/retrieve/admin`);
+    return this.http.get<Video[]>(`${environment.apiServer}/videos/retrieve-all`);
   }
 
   getAllUsers(): Observable<UserResponse[]> {
