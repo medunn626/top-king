@@ -30,6 +30,9 @@ export class ContentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (!localStorage.getItem('userId')) {
+      this.router.navigate(['/']);
+    }
     this.usersCurrentPlan = localStorage.getItem('productTier') ?? '';
     this.loadVideoData();
     this.onResize();

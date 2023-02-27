@@ -114,3 +114,7 @@ p.submit.button{
 a:hover {
 	cursor: grab;
 }
+
+.update-price-btn {
+	min-width: 50%;
+}

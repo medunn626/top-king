@@ -12,6 +12,14 @@ export interface Video {
     productTiersAppliedTo: string[];
 }
 
+export interface Prices {
+  id?: number;
+  beginner: number;
+  intermediate: number
+  elite: number;
+  consulting: number;
+}
+
 @Injectable()
 export class AdminService {
 
@@ -41,6 +49,10 @@ export class AdminService {
 
   getAllUsers(): Observable<UserResponse[]> {
     return this.http.get<UserResponse[]>(`${environment.apiServer}/users`);
+  }
+
+  updatePricing(prices: number[]): Observable<Prices> {
+    return this.http.post<Prices>(`${environment.apiServer}/pricing`, prices);
   }
 
 }

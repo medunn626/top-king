@@ -5,6 +5,7 @@ import { AdminService, Video } from './admin.service';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
 import { UserResponse } from '../login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -32,17 +33,43 @@ export class AdminComponent implements OnInit {
   addFailure = false;
   getFailure = false;
   maintenanceFailure = false;
+  pricesFailure = false;
   notificationMethod = 'N';
   loading = false;
+  showVideoUpload = false;
+  showVideoMaintenance = false;
+  showUpdatePricing = false;
+  showUsers = false;
+  prices = <any>{};
 
   constructor(
     public dialog: MatDialog,
-    private readonly adminService: AdminService
+    private readonly adminService: AdminService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
+    if (!localStorage.getItem('userId') && localStorage.getItem('productTier') !== 'admin') {
+      this.router.navigate(['/']);
+    }
     this.getVideos();
     this.getUsers();
+  }
+
+  toggleVideoUpload() {
+    this.showVideoUpload = !this.showVideoUpload;
+  }
+
+  toggleVideoMaintenance() {
+    this.showVideoMaintenance = !this.showVideoMaintenance;
+  }
+
+  toggleUpdatePricing() {
+    this.showUpdatePricing = !this.showUpdatePricing;
+  }
+
+  toggleUsers() {
+    this.showUsers = !this.showUsers;
   }
 
   updateFile(event) {
@@ -215,6 +242,33 @@ export class AdminComponent implements OnInit {
         }
       });
     }
+  }
+
+  updatePricing() {
+    if(this.prices.beginner ||
+      this.prices.intermediate ||
+      this.prices.elite ||
+      this.prices.consulting) {
+        const updatedPrices = [
+          this.prices.beginner ?? (localStorage.getItem('beginnerPrice') ?? '30'),
+          this.prices.intermediate ?? (localStorage.getItem('intermediatePrice') ?? '50'),
+          this.prices.elite ?? (localStorage.getItem('elitePrice') ?? '75'),
+          this.prices.consulting ?? (localStorage.getItem('consultingPrice') ?? '100')
+        ];
+        this.adminService.updatePricing(updatedPrices)
+        .subscribe(
+          (updatedPrices) => {
+            localStorage.setItem('beginnerPrice', '' + updatedPrices.beginner);
+            localStorage.setItem('intermediatePrice', '' +  updatedPrices.intermediate);
+            localStorage.setItem('elitePrice', '' + updatedPrices.elite);
+            localStorage.setItem('consultingPrice', '' +  updatedPrices.consulting);
+            this.pricesFailure = false;
+            this.router.navigate(['plans']);
+          },
+          () => this.pricesFailure = true
+        )
+
+      }
   }
 
 }

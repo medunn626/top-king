@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
+import { EMPTY } from 'rxjs';
 import { ConsultingFormDialog } from './consulting-form-dialog/consulting-form-dialog.component';
 import { PackagesService } from './packages.service';
 
@@ -28,6 +28,7 @@ export class PackagesComponent implements OnInit {
   updatePlanFailed = false;
   consultingImgSrc = '/assets/phone.jpg';
   smallerScreen = false;
+  consultingPrice: string;
   
   constructor(
     public router: Router,
@@ -43,12 +44,28 @@ export class PackagesComponent implements OnInit {
 
   private setOrUpdatePlans(): void {
     this.usersCurrentPlan = +(localStorage.getItem('productTier') ?? 0);
+    this.populatePricesAndPackages();
+  }
+
+  private populatePricesAndPackages(): void {
+    if (!localStorage.getItem('beginnerPrice')) {
+      this.packagesService.getPrices()
+      .subscribe(
+        (prices) => {
+          localStorage.setItem('beginnerPrice', '' + prices.beginner);
+          localStorage.setItem('intermediatePrice', '' +  prices.intermediate);
+          localStorage.setItem('elitePrice', '' + prices.elite);
+          localStorage.setItem('consultingPrice', '' +  prices.consulting);
+          this.populatePackages();
+        },
+        () => EMPTY
+      );
+    }
     this.populatePackages();
-    this.userHasAPackage = !!this.packages.find(p => p.userHasThisPlan);
-    this.usersNonPackages = this.userHasAPackage ? [] : this.packages.filter(p => !p.userHasThisPlan);
   }
 
   private populatePackages(): void {
+    this.consultingPrice = localStorage.getItem('consultingPrice') ?? '100';
     this.packages = [
       {
         id: 1,
@@ -58,7 +75,7 @@ export class PackagesComponent implements OnInit {
           'This program will provide world renown introduction fitness exercises to help incorporate ' +
           'into your daily exercises including free weights & calisthenics!!'
         ],
-        price: 30,
+        price: +(localStorage.getItem('beginnerPrice') ?? '30'),
         userHasThisPlan: this.usersCurrentPlan === 1
       },
       {
@@ -68,7 +85,7 @@ export class PackagesComponent implements OnInit {
         descriptions: [
           'This program includes muscle and strength training exercises to take basic training to next level with machines and much more!!'
         ],
-        price: 50,
+        price: +(localStorage.getItem('intermediatePrice') ?? '50'),
         userHasThisPlan: this.usersCurrentPlan === 2
       },
       {
@@ -81,10 +98,12 @@ export class PackagesComponent implements OnInit {
           'Cutting program for people who want to get cut or lose weight!',
           'Also includes all of the above plans incorporating supersets, drop sets, different innovative exercises to hit the muscle from different angles and many more!!'
         ],
-        price: 75,
+        price: +(localStorage.getItem('elitePrice') ?? '75'),
         userHasThisPlan: this.usersCurrentPlan === 3
       },
-    ]
+    ];
+    this.userHasAPackage = !!this.packages.find(p => p.userHasThisPlan);
+    this.usersNonPackages = this.userHasAPackage ? [] : this.packages.filter(p => !p.userHasThisPlan);
   }
 
   purchasePlan(planNumber: number): void {

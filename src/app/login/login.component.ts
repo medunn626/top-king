@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('userId')) {
-      this.router.navigate(['home'])
+      this.router.navigate(['/']);
     }
     this.intendedPlanToPurchase = localStorage.getItem('productTierIntendingToPurchase') ?? '';
     this.showLoginFirstMessage = !!this.intendedPlanToPurchase;

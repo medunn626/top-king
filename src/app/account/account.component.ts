@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { AccountService } from './account.service';
 import { UpdateUserDialog, UserDialogData } from './update-user-dialog/update-user-dialog.component';
@@ -15,10 +16,14 @@ export class AccountComponent implements OnInit {
   
   constructor(
     public accountService: AccountService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    if (!localStorage.getItem('userId')) {
+      this.router.navigate(['/']);
+    }
     this.accountService.userHasPlan = !!localStorage.getItem('productTier');
     this.onResize();
   }

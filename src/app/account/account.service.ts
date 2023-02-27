@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginService, UserRequest, UserResponse } from '../login/login.service';
 
@@ -56,7 +56,7 @@ export class AccountService {
   signOut() {
     localStorage.clear();
     this.loginService.setStatus();
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
 }

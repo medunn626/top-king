@@ -13,16 +13,17 @@ export class ConfirmationGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot): Observable<any> {
         if (!this.isAllowed(route)) {
-            this.router.navigate(['home']);
+            this.router.navigate(['/']);
             return of(false);
         }
         return of(true);
     }
 
     private isAllowed(route: ActivatedRouteSnapshot) {
+        const isLoggedIn: boolean = !!localStorage.getItem('userId');
         const tier: string = route.params['tier'];
         const hasCheckoutSession: boolean = !!route.queryParams['checkout'];
-        const canActivate = hasCheckoutSession && !!tier;
+        const canActivate = isLoggedIn && hasCheckoutSession && !!tier;
         if (canActivate && ['1', '2', '3'].includes(tier)) {
             const userId: string = localStorage.getItem('userId') ?? '';
             if (userId) {

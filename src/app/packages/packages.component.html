@@ -60,7 +60,7 @@
                         class="purchase-button"
                         (click)="triggerConfirmCallDialog()"
                         type="submit"
-                        value="Book for $100"/>
+                        [value]="'Book for $' + consultingPrice"/>
                     </p>
                     <br/>
                 </div>
@@ -89,7 +89,7 @@
                     class="purchase-button"
                     (click)="triggerConfirmCallDialog()"
                     type="submit"
-                    value="Book for $100"/>
+                    [value]="'Book for $' + consultingPrice"/>
                 </p>
                 <br/>
             </div>

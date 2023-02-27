@@ -1,13 +1,18 @@
-<div *ngIf="addFailure" class="failure">
-    <h4>There was a problem saving the video. Please try again.</h4>
-</div>
 <div *ngIf="getFailure" class="failure">
     <h4>There was a problem retrieving data.</h4>
 </div>
 <div id="wrapper">
+    <h1>Admin Page</h1>
+</div>
+<div id="wrapper">
+    <a (click)="toggleVideoUpload()"><h3>Video Upload</h3></a>
+</div>
+<div *ngIf="addFailure" class="failure">
+    <h4>There was a problem saving the video. Please try again.</h4>
+</div>
+<div *ngIf="showVideoUpload" id="wrapper">
     <form (ngSubmit)="uploadVideo()" ngNativeValidate>
-        <h1>Admin Page</h1>
-        <label for="file">Upload a video</label>
+        <label for="file">File</label>
         <br/>
         <input type="file" name="file" (change)="updateFile($event)" required/>
         <br/>
@@ -39,13 +44,47 @@
 </div>
 
 <div id="wrapper">
-    <h1>Video Maintenance</h1>
+    <a (click)="toggleUpdatePricing()"><h3>Update Pricing</h3></a>
+</div>
+<div *ngIf="pricesFailure" class="failure">
+    <h4>There was a problem updating the pricing. Please try again</h4>
+</div>
+<div *ngIf="showUpdatePricing" id="wrapper">
+    <form (ngSubmit)="updatePricing()" ngNativeValidate>
+        <!-- Beginner -->
+        <label for="beginnerPrice">Beginner</label>
+        <br/>
+        <input [(ngModel)]="prices.beginner" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="beginnerPrice"/>
+        <br/>
+        <!-- Intemediate -->
+        <label for="intermediatePrice">Intermediate</label>
+        <br/>
+        <input [(ngModel)]="prices.intermediate" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="intermediatePrice"/>
+        <br/>
+        <!-- Elite -->
+        <label for="elitePrice">Elite</label>
+        <br/>
+        <input [(ngModel)]="prices.elite" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="elitePrice"/>
+        <br/>
+        <!-- Consulting -->
+        <label for="consultingPrice">Consulting</label>
+        <br/>
+        <input [(ngModel)]="prices.consulting" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="consultingPrice"/>
+        <br/>
+        <p *ngIf="!loading" class="submit button">
+            <input class="update-price-btn" type="submit" value="Update"/>
+        </p>
+    </form>
+
+</div>
+
+<div id="wrapper">
+    <a (click)="toggleVideoMaintenance()"><h3>Video Maintenance</h3></a>
 </div>
 <div *ngIf="maintenanceFailure" class="failure">
     <h4>There was a problem saving the video. Please try again</h4>
 </div>
-
-<div id="wrapper">
+<div *ngIf="showVideoMaintenance" id="wrapper">
     <table style="min-width: 80%;" mat-table [dataSource]="videoDataSource">
         <ng-container [matColumnDef]="column" *ngFor="let column of videoDisplayedColumns">
           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
@@ -62,13 +101,13 @@
       
         <tr mat-header-row *matHeaderRowDef="videoDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: videoDisplayedColumns"></tr>
-      </table>
+    </table>
 </div>
 
 <div id="wrapper">
-    <h1>Users</h1>
+    <a (click)="toggleUsers()"><h3>Users</h3></a>
 </div>
-<div id="wrapper">
+<div *ngIf="showUsers" id="wrapper">
     <table style="min-width: 80%;" mat-table [dataSource]="userDataSource">
         <ng-container [matColumnDef]="column" *ngFor="let column of userDisplayedColumns">
           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
