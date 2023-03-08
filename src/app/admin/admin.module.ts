@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
 import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
+import { PackagesService } from '../packages/packages.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.com
     AdminComponent,
     ModifyVideoDialog
   ],
-  providers: [AdminService]
+  providers: [AdminService, PackagesService]
 })
 export class AdminModule { }

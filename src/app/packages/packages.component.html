@@ -31,7 +31,7 @@
                         class="purchase-button"
                         (click)="purchasePlan(package.id)"
                         type="submit"
-                        [value]="'$' + package.price + '/month'"
+                        [value]="'$' + package.price + '/' + (package.isAnnual ? 'year' : 'month')"
                     />
                 </p>
                 <br/>

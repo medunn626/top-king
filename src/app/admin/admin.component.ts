@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { AdminService, Video } from './admin.service';
+import { AdminService, Prices, Video } from './admin.service';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog.component';
 import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
 import { UserResponse } from '../login/login.service';
 import { Router } from '@angular/router';
+import { PackagesService } from '../packages/packages.service';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -40,11 +42,12 @@ export class AdminComponent implements OnInit {
   showVideoMaintenance = false;
   showUpdatePricing = false;
   showUsers = false;
-  prices = <any>{};
+  prices: Prices;
 
   constructor(
     public dialog: MatDialog,
     private readonly adminService: AdminService,
+    private readonly packagesService: PackagesService,
     private router: Router
   ){}
 
@@ -54,6 +57,7 @@ export class AdminComponent implements OnInit {
     }
     this.getVideos();
     this.getUsers();
+    this.getPricing();
   }
 
   toggleVideoUpload() {
@@ -244,24 +248,43 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  makeAnnual(checked: boolean, plan: string) {
+    if (checked) {
+      this.prices.annualPrices.push(plan);
+    } else {
+      const index = this.prices.annualPrices.findIndex(el => plan === el);
+      this.prices.annualPrices.splice(index, 1);
+    }
+  }
+
+  getPricing() {
+    this.packagesService.getPrices()
+    .subscribe(
+      (prices) => {
+        this.prices = prices;
+        localStorage.setItem('beginnerPrice', '' + prices.beginner);
+        localStorage.setItem('intermediatePrice', '' +  prices.intermediate);
+        localStorage.setItem('elitePrice', '' + prices.elite);
+        localStorage.setItem('consultingPrice', '' +  prices.consulting);
+        localStorage.setItem('annualPrices', '' + prices.annualPrices)
+      },
+      () => EMPTY
+    );
+  }
+
   updatePricing() {
     if(this.prices.beginner ||
       this.prices.intermediate ||
       this.prices.elite ||
       this.prices.consulting) {
-        const updatedPrices = [
-          this.prices.beginner ?? (localStorage.getItem('beginnerPrice') ?? '30'),
-          this.prices.intermediate ?? (localStorage.getItem('intermediatePrice') ?? '50'),
-          this.prices.elite ?? (localStorage.getItem('elitePrice') ?? '75'),
-          this.prices.consulting ?? (localStorage.getItem('consultingPrice') ?? '100')
-        ];
-        this.adminService.updatePricing(updatedPrices)
+        this.adminService.updatePricing(this.prices)
         .subscribe(
           (updatedPrices) => {
             localStorage.setItem('beginnerPrice', '' + updatedPrices.beginner);
             localStorage.setItem('intermediatePrice', '' +  updatedPrices.intermediate);
             localStorage.setItem('elitePrice', '' + updatedPrices.elite);
             localStorage.setItem('consultingPrice', '' +  updatedPrices.consulting);
+            localStorage.setItem('annualPrices', '' +  updatedPrices.annualPrices);
             this.pricesFailure = false;
             this.router.navigate(['plans']);
           },

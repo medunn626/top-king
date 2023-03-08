@@ -11,6 +11,7 @@ export interface Package {
   titleImageSrc?: string;
   descriptions: string[],
   price: number;
+  isAnnual: boolean;
   userHasThisPlan: boolean;
 }
 
@@ -56,6 +57,7 @@ export class PackagesComponent implements OnInit {
           localStorage.setItem('intermediatePrice', '' +  prices.intermediate);
           localStorage.setItem('elitePrice', '' + prices.elite);
           localStorage.setItem('consultingPrice', '' +  prices.consulting);
+          localStorage.setItem('annualPrices', '' +  prices.annualPrices);
           this.populatePackages();
         },
         () => EMPTY
@@ -76,6 +78,7 @@ export class PackagesComponent implements OnInit {
           'into your daily exercises including free weights & calisthenics!!'
         ],
         price: +(localStorage.getItem('beginnerPrice') ?? '30'),
+        isAnnual: localStorage.getItem('annualPrices')?.includes('B') ?? false,
         userHasThisPlan: this.usersCurrentPlan === 1
       },
       {
@@ -86,6 +89,7 @@ export class PackagesComponent implements OnInit {
           'This program includes muscle and strength training exercises to take basic training to next level with machines and much more!!'
         ],
         price: +(localStorage.getItem('intermediatePrice') ?? '50'),
+        isAnnual: localStorage.getItem('annualPrices')?.includes('I') ?? false,
         userHasThisPlan: this.usersCurrentPlan === 2
       },
       {
@@ -99,6 +103,7 @@ export class PackagesComponent implements OnInit {
           'Also includes all of the above plans incorporating supersets, drop sets, different innovative exercises to hit the muscle from different angles and many more!!'
         ],
         price: +(localStorage.getItem('elitePrice') ?? '75'),
+        isAnnual: localStorage.getItem('annualPrices')?.includes('E') ?? false,
         userHasThisPlan: this.usersCurrentPlan === 3
       },
     ];

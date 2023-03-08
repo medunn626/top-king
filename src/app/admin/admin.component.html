@@ -55,16 +55,36 @@
         <label for="beginnerPrice">Beginner</label>
         <br/>
         <input [(ngModel)]="prices.beginner" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="beginnerPrice"/>
+        <mat-checkbox
+            [checked]="prices.annualPrices.includes('B')"
+            (change)="makeAnnual($event.checked, 'B')"
+        >
+            Annual?
+        </mat-checkbox>
         <br/>
         <!-- Intemediate -->
         <label for="intermediatePrice">Intermediate</label>
         <br/>
         <input [(ngModel)]="prices.intermediate" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="intermediatePrice"/>
+        <mat-checkbox
+            [checked]="prices.annualPrices.includes('I')"
+            (change)="makeAnnual($event.checked, 'I')"
+        >
+            Annual?
+        </mat-checkbox>
+        <br/>
         <br/>
         <!-- Elite -->
         <label for="elitePrice">Elite</label>
         <br/>
         <input [(ngModel)]="prices.elite" size="30" pattern="[0-9]*" inputmode="numeric" type="number" name="elitePrice"/>
+        <mat-checkbox
+            [checked]="prices.annualPrices.includes('E')"
+            (change)="makeAnnual($event.checked, 'E')"
+        >
+            Annual?
+        </mat-checkbox>
+        <br/>
         <br/>
         <!-- Consulting -->
         <label for="consultingPrice">Consulting</label>
