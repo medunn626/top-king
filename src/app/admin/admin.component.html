@@ -105,22 +105,35 @@
     <h4>There was a problem saving the video. Please try again</h4>
 </div>
 <div *ngIf="showVideoMaintenance" id="wrapper">
-    <table style="min-width: 80%;" mat-table [dataSource]="videoDataSource">
+    <table style="min-width: 80%;" mat-table
+        [dataSource]="videoDataSource"
+        cdkDropList
+        [cdkDropListData]="videoDataSource"
+        (cdkDropListDropped)="reorderVideos($event)"
+        fxFill
+    >
         <ng-container [matColumnDef]="column" *ngFor="let column of videoDisplayedColumns">
           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
           <td mat-cell *matCellDef="let vid">
-            <span *ngIf="column === 'docName'">
+            <span *ngIf="column === 'orderNumber'">
                 <a (click)="deleteVideo(vid)">X</a>
             </span>
             {{ getFriendlyTierNames(vid[column]) }}
-            <span>
+            <span *ngIf="column !== 'orderNumber'">
                 <a (click)="modifyVideo(column, vid)">Edit</a>
               </span>
             </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="videoDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: videoDisplayedColumns"></tr>
+        <tr mat-row
+            style="cursor: move"
+            *matRowDef="let row; columns: videoDisplayedColumns"
+            cdkDrag
+            cdkDragDisplayed="true"
+            [cdkDragData]="row"
+        >
+        </tr>
     </table>
 </div>
 

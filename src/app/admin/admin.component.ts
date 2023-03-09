@@ -8,6 +8,7 @@ import { UserResponse } from '../login/login.service';
 import { Router } from '@angular/router';
 import { PackagesService } from '../packages/packages.service';
 import { EMPTY } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-admin',
@@ -21,6 +22,7 @@ export class AdminComponent implements OnInit {
   videoTiers = '';
   users: UserResponse[];
   videoDisplayedColumns: string[] = [
+    'orderNumber',
     'docName',
     'productTiersAppliedTo'
   ];
@@ -118,7 +120,7 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllVideos().subscribe(
       (videos) =>  {
         this.getFailure = false;
-        this.videos = videos;
+        this.videos = videos.sort((vid1, vid2) => vid1.orderNumber - vid2.orderNumber);
         this.videoDataSource = new MatTableDataSource(this.videos);
       },
       () => this.getFailure = true
@@ -136,8 +138,8 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getFriendlyTierNames(result: string | string[]) {
-    if (typeof result !== 'string') {
+  getFriendlyTierNames(result: string | string[] | number) {
+    if (typeof result !== 'string' && typeof result !== 'number') {
       return result
       .filter(res => res !== 'admin')
       .map(res => {
@@ -222,6 +224,29 @@ export class AdminComponent implements OnInit {
           );
         }
       });
+    }
+  }
+
+  reorderVideos(event: CdkDragDrop<Video>) {
+    if (event.previousIndex !== event.currentIndex) {
+      moveItemInArray(this.videos, event.previousIndex, event.currentIndex);
+      const startingIndex = +this.videos.map(vid => vid.orderNumber).sort()[0];
+      const reorderedVideos: Video[] = [];
+      for (let i = 0; i < this.videos.length; i++) {
+        const vid = {
+          ...this.videos[i],
+          orderNumber: startingIndex + i
+        }
+        reorderedVideos.push(vid);
+      }
+      this.adminService.updateOrdersOnVideos(reorderedVideos)
+      .subscribe(
+        () => {
+          this.maintenanceFailure = false;
+          this.getVideos();
+        },
+        () => this.maintenanceFailure = true
+      );
     }
   }
 

@@ -6,6 +6,7 @@ import { UserResponse } from '../login/login.service';
 
 export interface Video {
     id?: number;
+    orderNumber: number;
     docName: string;
     docType: string;
     driveId: string;
@@ -38,6 +39,10 @@ export class AdminService {
 
   updateVideoName(videoId: number, name: string): Observable<any> {
     return this.http.put<void>(`${environment.apiServer}/videos/update/id/${videoId}/name/${name}`, {});
+  }
+
+  updateOrdersOnVideos(videos: Video[]): Observable<void> {
+    return this.http.put<void>(`${environment.apiServer}/videos/update-order`, videos);
   }
 
   removeVideo(videoId: number): Observable<any> {

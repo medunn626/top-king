@@ -10,16 +10,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from './admin.service';
 import { ModifyVideoDialog } from './modify-video-dialog/modify-video-dialog.component';
 import { PackagesService } from '../packages/packages.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    DragDropModule,
     FormsModule,
     MatRadioModule,
     MatCheckboxModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   declarations: [
     AdminComponent,

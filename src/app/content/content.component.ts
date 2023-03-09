@@ -41,7 +41,7 @@ export class ContentComponent implements OnInit {
   private loadVideoData() {
     this.contentService.getVideosForTier('admin').subscribe(
       (videos) => {
-        this.allVideos = videos;
+        this.allVideos = videos.sort((vid1, vid2) => vid1.orderNumber - vid2.orderNumber);;
         this.updateScreenData();
       },
       () => this.getVideosFailure = true);

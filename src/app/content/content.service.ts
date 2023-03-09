@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 export interface Video {
     id?: number;
+    orderNumber: number;
     docName: string;
     docType: string;
     driveId: string;
