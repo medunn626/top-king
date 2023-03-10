@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { PackagesService } from '../packages/packages.service';
 import { EMPTY } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AccountService } from '../account/account.service';
 
 @Component({
   selector: 'app-admin',
@@ -136,6 +137,26 @@ export class AdminComponent implements OnInit {
       },
       () => this.getFailure = true
     );
+  }
+
+  removePlanFromUser(userId: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      disableClose: true,
+      width: '75%'
+    });
+    dialogRef.componentInstance.confirmMessage = `Please confirm you would like to remove this user's plan`;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && userId) {
+        this.adminService.removeUsersPlan(userId)
+        .subscribe(
+          () => {
+            this.getFailure = false;
+            this.getUsers();
+          },
+          () => this.getFailure = true
+        );
+      }
+    });
   }
 
   getFriendlyTierNames(result: string | string[] | number) {

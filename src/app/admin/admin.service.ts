@@ -61,4 +61,8 @@ export class AdminService {
     return this.http.post<Prices>(`${environment.apiServer}/pricing`, prices);
   }
 
+  removeUsersPlan(id: string) {
+    return this.http.put<void>(`${environment.apiServer}/remove-plan/${id}`, {});
+  }
+
 }
